@@ -2,11 +2,12 @@
   "name": "splendor",
   "version": "0.1.0",
   "scripts": {
-    "dev": "next dev",
+    "dev": "nodemon server.js",
     "build": "next build",
-    "start": "next start"
+    "start": "node server.js"
   },
   "dependencies": {
+    "express": "^4.17.1",
     "next": "^10.0.0",
     "react": "16.13.1",
     "react-dom": "16.13.1"
