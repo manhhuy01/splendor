@@ -1,6 +1,5 @@
 const config = {
-  // server: 'http://localhost:5000',
-  server: 'https://splendor-api.herokuapp.com',
+  server: process.env.NEXT_PUBLIC_SERVER,
 };
 
 export default config;
