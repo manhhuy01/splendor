@@ -6,7 +6,9 @@ const handle = app.getRequestHandler()
 
 app.prepare().then(() => {
   const server = express();
-
+  server.get('/api', (req, res)=> {
+    res.send('api')
+  })
   server.all('*', (req, res) => {
     return handle(req, res)
   })
