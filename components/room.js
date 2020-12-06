@@ -1,16 +1,21 @@
-const Room = ({ rooms, joinRoom }) => (
+const roomComponent = ({ room, player: { name }, start }) => (
   <div>
-    {
-      rooms.map((room) => (
-        <div key={room.id}>
-          <div>
-            {`phòng ${room.id} (${room.players.length})`}
-          </div>
-          <button type="button" disabled={room.isFull} onClick={() => joinRoom(room.id)}>vô</button>
-        </div>
-      ))
-    }
+    <h1 className="title">
+      Welcome to Splendor
+    </h1>
+    <div>
+      Id phòng:
+      {room.id}
+    </div>
+    <div>
+      Tên:
+      {name}
+    </div>
+    <div>
+      Hiện có:
+      {room.players.map((x) => x.name).join()}
+    </div>
+    <button type="button" onClick={start}>Start</button>
   </div>
 );
-
-export default Room;
+export default roomComponent;
