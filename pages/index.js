@@ -65,7 +65,8 @@ export default function Home() {
               start={startHandle}
             />
           )}
-        {roomJoined && roomJoined.game.started && <Game socket={socket} game={roomJoined.game} />}
+        {roomJoined && roomJoined.game.started
+        && <Game socket={socket} game={roomJoined.game} room={roomJoined} />}
       </main>
     </div>
   );
