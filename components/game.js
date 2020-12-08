@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { post } from '../utils/requets';
 
 const gameComponent = ({ socket, game, room }) => {
   const turn = room.players.find((x) => x.socketId === socket.id)?.turn;
@@ -6,7 +7,8 @@ const gameComponent = ({ socket, game, room }) => {
 
   const throwTurn = useCallback(
     () => {
-      socket.emit('action', { type: 'throw_turn', data: { roomId: room.id } });
+      // socket.emit('action', { type: 'throw_turn', data: { roomId: room.id } });
+      post('throw_turn', { roomId: room.id, socketId: socket.id });
     },
     [socket],
   );
