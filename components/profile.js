@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import constants from '../constants';
 import TokenProfile from './tokenProfile';
 import { ActionContext } from '../utils/context';
+import Duke from './duke';
 
 const getLevelCard = (cardId) => {
   if (cardId < 41) return 1;
@@ -84,6 +85,11 @@ const profileComponent = ({
               }, [])
             }
           </div>
+        </div>
+        <div className="profile__game__duke">
+          {
+            !!player.dukes.length && <Duke dukes={player.dukes} />
+          }
         </div>
       </div>
     </div>

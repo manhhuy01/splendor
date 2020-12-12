@@ -144,7 +144,7 @@ const actionComponent = ({ socket, room }) => {
             <span>Đang bốc</span>
             <TokenProfile token={state.token || {}} />
             <div className="action__confirm">
-              <button type="button" onClick={onClearAction}>Làm lại</button>
+              <button type="button" onClick={onClearAction}>reset</button>
               <button type="button" onClick={finishCollect}>OK</button>
             </div>
 
@@ -166,7 +166,7 @@ const actionComponent = ({ socket, room }) => {
               )
             }
             <div className="action__confirm">
-              <button type="button" onClick={onClearAction}>Làm lại</button>
+              <button type="button" onClick={onClearAction}>reset</button>
               <button type="button" onClick={finishDeposit}>OK</button>
             </div>
 
@@ -187,7 +187,7 @@ const actionComponent = ({ socket, room }) => {
             </div>
 
             <div className="action__confirm">
-              <button type="button" onClick={onClearAction}>Làm lại</button>
+              <button type="button" onClick={onClearAction}>reset</button>
               <button type="button" onClick={finishBuyCard}>OK</button>
             </div>
 
@@ -200,7 +200,7 @@ const actionComponent = ({ socket, room }) => {
             <span>Trả token</span>
             <TokenProfile token={state.token || {}} />
             <div className="action__confirm">
-              <button type="button" onClick={onClearAction}>Làm lại</button>
+              <button type="button" onClick={onClearAction}>reset</button>
               <button type="button" onClick={finishReturnToken}>OK</button>
             </div>
 

@@ -59,9 +59,16 @@
 .card {
   margin: 0 4px;
 }
+.profile{
+  display: flex;
+  flex-direction: column;
+  border: dashed 1px gray;
+  transition: all 0.3s;
+}
 
 .profile.my-turn {
-  border: 2px solid green;
+  border: 2px solid yellow;
+  box-shadow: 10px 10px 8px 10px #888888;
   display: flex;
   flex-direction: column;
 }
@@ -74,6 +81,7 @@
   width: 100%;
   height: 100%;
   display: flex;
+  position: relative;
 }
 
 .profile__game__deposit {
@@ -104,10 +112,18 @@
   width: 100%;
   display: flex;
 }
+
+.profile__game__duke{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
 .profile__card__column{
   display: flex;
   flex-direction: column;
   margin-top: 60px;
+  margin-right: 4px;
 }
 .profile__card{
   height: 80px;
@@ -124,21 +140,34 @@
   background: gray;
   border: 1px solid gray;
   margin-bottom: 12px;
+  transition: all 0.3s;
+  border-radius: 8px;
+  display: flex;
 }
 
 .action-board.active {
   background: white;
   border: none;
-}
+  box-shadow: 4px 5px 4px 5px #888888;
 
+}
+.action-container{
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-around;
+}
 .action-container button {
   margin: 2px;
 }
 
 .action__confirm{
   position: absolute;
-  right: 0;
-  top: 0;
+  right: 5px;
+  top: 5px;
+}
+.action__confirm button{
+  margin-right: 4px;
 }
 .action-buy__material{
   display: flex;

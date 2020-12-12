@@ -30,7 +30,7 @@ const gameComponent = ({ socket, game, room }) => {
         </div>
         <div className="game__center">
           <div className="table-game">
-            <DukeComponent duke_table={game.table.duke_table} />
+            <DukeComponent dukes={game.table.dukes} />
             <CardComponent card_table={game.table.card_table} />
             <TokenComponent token={game.table.token} />
           </div>
