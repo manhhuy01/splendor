@@ -17,7 +17,7 @@ const welcome = ({ rooms, joinRoom }) => {
             <div>
               {`phòng ${room.id} (${room.players.length})`}
             </div>
-            <button type="button" disabled={room.isFull} onClick={() => joinRoom(room.id, inputRef.current.value)}>vô</button>
+            <button type="button" onClick={() => joinRoom(room.id, inputRef.current.value)}>vô</button>
           </div>
         ))
       }
