@@ -1,0 +1,125 @@
+.game {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  left: 0;
+  top: 0;
+}
+
+.game__left, .game__center, .game__right {
+  width: 33%;
+  height: 100%;
+}
+
+.game__left>div, .game__right>div {
+  height: 50%;
+  width: 100%;
+}
+
+.duke-container {
+  display: flex;
+}
+
+.duke-container .duke {
+  margin: 8px;
+}
+
+.token-container {
+  display: flex;
+}
+
+.token-normal {
+  display: flex;
+}
+
+.token-normal.collecting {
+  background: yellow;
+  cursor: pointer;
+}
+
+.token__number {
+  text-align: center;
+}
+
+.table-game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card-table-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.card-level-row {
+  display: flex;
+}
+
+.card {
+  margin: 0 4px;
+}
+
+.profile.my-turn {
+  border: 2px solid green;
+}
+
+.profile__name {
+  text-align: center;
+}
+
+.profile__game {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
+
+.profile__game__deposit {
+  width: 30%;
+  height: 100%;
+}
+
+.profile__game__token-cards {
+  width: 70%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.profile__game__token {
+  height: 30%;
+  width: 100%;
+}
+
+.profile_game__cards {
+  height: 70%;
+  width: 100%;
+}
+
+.action-board {
+  position: absolute;
+  bottom: 0;
+  width: 33vw;
+  left: calc(100vw/3);
+  height: 100px;
+  background: gray;
+  border: 1px solid gray;
+}
+
+.action-board.active {
+  background: white;
+  border: none;
+}
+
+.action-container button {
+  margin: 2px;
+}
+
+.action__confirm{
+  position: absolute;
+  right: 0;
+  top: 0;
+}

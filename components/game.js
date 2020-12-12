@@ -1,51 +1,30 @@
-import { useCallback } from 'react';
-import { post } from '../utils/requets';
+import { useReducer } from 'react';
+import TableGame from './tableGame';
+import Profile from './profile';
+import ActionBoard from './action';
+import { ActionContext } from '../utils/context';
+import { initialState, reducer } from '../utils/reducer';
 
 const gameComponent = ({ socket, game, room }) => {
-  const turn = room.players.find((x) => x.socketId === socket.id)?.turn;
-  const myProfile = game.players[turn];
-
-  const throwTurn = useCallback(
-    () => {
-      // socket.emit('action', { type: 'throw_turn', data: { roomId: room.id } });
-      post('throw_turn', { roomId: room.id, socketId: socket.id });
-    },
-    [socket],
-  );
+  const getUser = (turn) => room.players.find((x) => x.turn === turn);
+  const [state, dispatch] = useReducer(reducer, initialState);
   return (
-    <div>
-      <div>{`lượt hiện tại: ${game.currentTurn}`}</div>
-      <div> table </div>
-      {
-        Object.keys(game.table.token).map((color) => (
-          <div key={color}>
-            {`${color}:${game.table.token[color]}`}
-          </div>
-        ))
-      }
-      <div> your profile </div>
-      <div>
-        {`your turn :${turn}`}
+    <ActionContext.Provider value={{ state, dispatch }}>
+      <div className="game">
+        <div className="game__left">
+          <Profile player={room.game.players[1]} user={getUser(1)} currentTurn={game.currentTurn} />
+          <Profile player={room.game.players[4]} user={getUser(4)} currentTurn={game.currentTurn} />
+        </div>
+        <div className="game__center">
+          <TableGame table={game.table} />
+        </div>
+        <div className="game__right">
+          <Profile player={room.game.players[2]} user={getUser(2)} currentTurn={game.currentTurn} />
+          <Profile player={room.game.players[3]} user={getUser(3)} currentTurn={game.currentTurn} />
+        </div>
+        <ActionBoard socket={socket} room={room} />
       </div>
-      <div>your token</div>
-      {
-        Object.keys(myProfile.token).map((color) => (
-          <div key={color}>
-            {`${color}:${myProfile.token[color]}`}
-          </div>
-        ))
-      }
-      {
-        turn === game.currentTurn && (
-          <div>
-            <div>Action</div>
-            <div>
-              <button type="button" onClick={throwTurn}>Bỏ lượt</button>
-            </div>
-          </div>
-        )
-      }
-    </div>
+    </ActionContext.Provider>
   );
 };
 
