@@ -91,6 +91,16 @@
   flex-direction: column;
   align-items: center;
 }
+
+.profile__deposit__card{
+  height: 80px;
+  width: auto;
+  transition: all 0.3s;
+}
+.profile__deposit__card:hover{
+  transform: scale(2);
+}
+
 .profile__game__deposit img {
   margin: 4px 0px;
 }

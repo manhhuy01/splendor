@@ -5,6 +5,7 @@ import useUnload from '../utils/useUnload';
 import Welcome from '../components/welcome';
 import RoomComponent from '../components/room';
 import Game from '../components/game';
+import { post } from '../utils/requets';
 
 export default function Home() {
   const socket = useSocket();
@@ -43,7 +44,13 @@ export default function Home() {
 
   const startHandle = useCallback(
     () => {
-      socket.emit('action', { type: 'start', data: { roomId: roomJoined.id } });
+      post('start', { roomId: roomJoined.id })
+        .then((res) => res.json()
+          .then((data) => {
+            if (data.error) {
+              alert(data.error);
+            }
+          }));
     },
     [roomJoined],
   );
@@ -66,7 +73,7 @@ export default function Home() {
             />
           )}
         {roomJoined && roomJoined.game.started
-        && <Game socket={socket} game={roomJoined.game} room={roomJoined} />}
+          && <Game socket={socket} game={roomJoined.game} room={roomJoined} />}
       </main>
     </div>
   );

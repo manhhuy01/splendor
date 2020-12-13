@@ -49,7 +49,9 @@ const gameComponent = ({ socket, game, room }) => {
             hidden={currentUser.turn !== 3}
           />
         </div>
-        <ActionBoard socket={socket} room={room} />
+        {
+          !game.finished && <ActionBoard socket={socket} room={room} />
+        }
       </div>
     </ActionContext.Provider>
   );

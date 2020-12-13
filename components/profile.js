@@ -49,9 +49,9 @@ const profileComponent = ({
               if (hidden) return <img key={card.id} src={`/${cardlevel}_.png`} style={{ height: '80px', width: 'auto' }} />;
               return (
                 <img
+                  className="profile__deposit__card"
                   key={card.id}
                   src={`/${card.image}.png`}
-                  style={{ height: '80px', width: 'auto' }}
                   onClick={() => onClickDepositCard(card)}
                 />
               );
