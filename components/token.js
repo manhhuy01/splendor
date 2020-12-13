@@ -1,5 +1,4 @@
 import { useContext } from 'react';
-import Image from 'next/image';
 import { ActionContext } from '../utils/context';
 
 const tokenComponent = ({ token }) => {
@@ -19,7 +18,7 @@ const tokenComponent = ({ token }) => {
             return [...agg, (
               <div key={color} className="token">
                 <div className="token__number">{token[color]}</div>
-                <Image src={`/${color}.png`} width="50" height="50" onClick={collectToken(color)} />
+                <img src={`/${color}.png`} onClick={collectToken(color)} />
               </div>
             )];
           }, [])
@@ -32,7 +31,7 @@ const tokenComponent = ({ token }) => {
             return [...agg, (
               <div key={color} className="token">
                 <div className="token__number">{token[color]}</div>
-                <Image src={`/${color}.png`} width="50" height="50" />
+                <img src={`/${color}.png`} />
               </div>
             )];
           }, [])

@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { useContext } from 'react';
 import { ActionContext } from '../utils/context';
 
@@ -35,14 +34,11 @@ const cardsComponent = ({ card_table: cardTable }) => {
         [3, 2, 1].map((level) => (
           <div key={level} className="card-level-row">
             {
-              !!cardTable.down[level].length && <Image src={`/${level}_.png`} width="70" height="100" onClick={onClickCartDown(level)} />
+              !!cardTable.down[level].length && <img className="card" src={`/${level}_.png`} onClick={onClickCartDown(level)} />
             }
             {
               cardTable.up[level].map((card) => (
-                <div className="card" key={card.id}>
-                  <Image src={`/${card.image}.png`} width="70" height="100" onClick={onClickCard(card)} />
-
-                </div>
+                <img className="card card--up" src={`/${card.image}.png`} onClick={onClickCard(card)} />
               ))
             }
           </div>

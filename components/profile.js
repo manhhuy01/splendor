@@ -46,7 +46,7 @@ const profileComponent = ({
           {
             !!player.deposit_cards.length && player.deposit_cards.map((card) => {
               const cardlevel = getLevelCard(card.id);
-              if (hidden) return <img key={card.id} src={`/${cardlevel}_.png`} style={{ height: '80px', width: 'auto' }} />;
+              if (hidden) return <img className="profile__deposit__card--down" key={card.id} src={`/${cardlevel}_.png`} />;
               return (
                 <img
                   className="profile__deposit__card"

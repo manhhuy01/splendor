@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 const tokenComponent = ({ token, onClickToken, selecting }) => (
   <div className={`token-container ${selecting ? 'selecting' : ''}`}>
     {
@@ -8,7 +6,7 @@ const tokenComponent = ({ token, onClickToken, selecting }) => (
         return [...agg, (
           <div key={color} className="token">
             <div className="token__number">{token[color]}</div>
-            <Image src={`/${color}.png`} width="50" height="50" onClick={() => onClickToken && onClickToken(color)} />
+            <img src={`/${color}.png`} onClick={() => onClickToken && onClickToken(color)} />
           </div>
         )];
       }, [])

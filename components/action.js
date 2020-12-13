@@ -1,5 +1,4 @@
 import { useCallback, useContext } from 'react';
-import Image from 'next/image';
 import { post } from '../utils/requets';
 import { ActionContext } from '../utils/context';
 import TokenProfile from './tokenProfile';
@@ -140,7 +139,7 @@ const actionComponent = ({ socket, room }) => {
       }
       {
         isMyTurn && state.actionType === 'collect_token' && (
-          <div>
+          <div className="action__collect-token">
             <span>Đang bốc</span>
             <TokenProfile token={state.token || {}} />
             <div className="action__confirm">
@@ -153,16 +152,16 @@ const actionComponent = ({ socket, room }) => {
       }
       {
         isMyTurn && state.actionType === 'deposit_card' && (
-          <div>
+          <div className="action__deposit-card">
             <div>Đang chọn</div>
             {
               state.card && (
-                <Image src={`/${state.card.image}.png`} width="50" height="72" layout="fixed" />
+                <img className="card" src={`/${state.card.image}.png`} />
               )
             }
             {
               state.deposit_card_level && (
-                <Image src={`/${state.deposit_card_level}_.png`} width="50" height="72" layout="fixed" />
+                <img className="card" src={`/${state.deposit_card_level}_.png`} />
               )
             }
             <div className="action__confirm">
@@ -175,12 +174,12 @@ const actionComponent = ({ socket, room }) => {
       }
       {
         isMyTurn && state.actionType === 'buy_card' && (
-          <div>
+          <div className="action__buy">
             <div>Token mua</div>
             <div className="action-buy__material">
               {
                 state.card && (
-                  <Image src={`/${state.card.image}.png`} width="50" height="72" layout="fixed" />
+                  <img className="card" src={`/${state.card.image}.png`} />
                 )
               }
               <TokenProfile token={state.token || {}} />
@@ -196,7 +195,7 @@ const actionComponent = ({ socket, room }) => {
       }
       {
         isMyTurn && state.actionType === 'return_token' && (
-          <div>
+          <div className="action__return">
             <span>Trả token</span>
             <TokenProfile token={state.token || {}} />
             <div className="action__confirm">
