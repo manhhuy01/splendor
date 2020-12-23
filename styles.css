@@ -31,10 +31,12 @@
   margin: 0 4px;
   transition: all 0.3s;
 }
+
 .duke-container .duke img {
   height: 100%;
 }
-.duke:hover{
+
+.duke:hover {
   transform: scale(2);
 }
 
@@ -42,6 +44,7 @@
   display: flex;
   width: 100%;
 }
+
 .token-container .token {
   width: 16%;
   display: flex;
@@ -49,7 +52,7 @@
   align-items: center;
 }
 
-.token-container .token img{
+.token-container .token img {
   width: 100%;
 }
 
@@ -59,11 +62,12 @@
   justify-content: center;
 }
 
-.token-normal .token img{
+.token-normal .token img {
   width: auto;
   height: 100%;
 }
-.token-gold{
+
+.token-gold {
   width: 16%;
 }
 
@@ -72,7 +76,7 @@
   height: 100%;
 }
 
-.token-container .token-gold img{
+.token-container .token-gold img {
   width: auto;
   height: 100%;
 }
@@ -95,8 +99,10 @@
   width: 100%;
 }
 
-.table-game .token img{
+.table-game .token img {
   height: calc(100% - 20px);
+  max-width: calc(100% - 20px);
+  object-fit: contain;
 }
 
 .card-table-container {
@@ -116,17 +122,22 @@
   align-items: center;
 }
 
-.card-level-row .card{
+.card-level-row .card {
   height: calc(100% - 8px);
+  max-width: calc(20% - 8px);
+  object-fit: contain;
 }
-.card--up:hover{
+
+.card--up:hover {
   transform: scale(2);
 }
+
 .card {
   transition: all 0.3s;
   margin: 0 4px;
 }
-.profile{
+
+.profile {
   display: flex;
   flex-direction: column;
   border: dashed 1px gray;
@@ -161,7 +172,7 @@
   align-items: center;
 }
 
-.profile__deposit__card{
+.profile__deposit__card {
   height: 30%;
   width: auto;
   transition: all 0.3s;
@@ -171,7 +182,7 @@
   height: 30%;
 }
 
-.profile__deposit__card:hover{
+.profile__deposit__card:hover {
   transform: scale(2);
 }
 
@@ -197,30 +208,32 @@
   display: flex;
 }
 
-.profile__game__duke{
+.profile__game__duke {
   position: absolute;
   bottom: 12px;
   right: 0;
   height: 25%;
 }
 
-.profile__game__duke .duke-container{
+.profile__game__duke .duke-container {
   height: 100%;
 }
 
-.profile__card__column{
+.profile__card__column {
   display: flex;
   flex-direction: column;
   margin-top: 60px;
   margin-right: 4px;
   width: 20%;
 }
-.profile__card{
+
+.profile__card {
   height: auto;
   width: 100%;
   margin-top: -60px;
   transition: all 0.3s;
 }
+
 .profile__card:hover {
   transform: scale(2);
 }
@@ -244,42 +257,47 @@
   background: white;
   border: none;
   box-shadow: 4px 5px 4px 5px #888888;
-
 }
 
-.action-container{
+.action-container {
   display: flex;
   width: 100%;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-around;
 }
+
 .action-container button {
   margin: 2px;
 }
 
-.action__confirm{
+.action__confirm {
   position: absolute;
   right: 5px;
   top: 5px;
 }
-.action__confirm button{
+
+.action__confirm button {
   margin-right: 4px;
 }
+
 .action__buy {
   display: flex;
   height: 100%;
   width: 100%;
   flex-direction: column;
 }
+
 .action__buy .token-container .token {
   width: 15%;
 }
-.action-buy__material{
+
+.action-buy__material {
   display: flex;
   height: 100%;
   width: 100%;
   flex-direction: row;
 }
+
 .action-buy__material .card {
   height: 80%;
 }
@@ -287,11 +305,502 @@
 .action__collect-token {
   width: 80%;
 }
+
 .action__deposit-card .card {
   height: 80%;
 }
 
-.selecting{
+.selecting {
   background: yellow;
   cursor: pointer;
+}
+
+/* modal */
+
+.modal-layout {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  background: rgba(0, 0, 0, 0.2);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-layout .modal-container {
+  max-width: 100%;
+  max-height: 100%;
+  min-width: 10%;
+  min-height: 10%;
+  background: white;
+  border-radius: 4px;
+}
+
+@-webkit-keyframes icon-winner-animation {
+  0% {
+    transform: translateY(0)
+  }
+  30% {
+    transform: translateY(-30px)
+  }
+  31% {
+    transform: translateY(-30px) rotateY(45deg);
+  }
+  32% {
+    transform: translateY(-30px) rotateY(90deg);
+  }
+  33% {
+    transform: translateY(-30px) rotateY(135deg);
+  }
+  34% {
+    transform: translateY(-30px) rotateY(180deg);
+  }
+  35% {
+    transform: translateY(-30px) rotateY(225deg);
+  }
+  36% {
+    transform: translateY(-30px) rotateY(270deg);
+  }
+  37% {
+    transform: translateY(-30px) rotateY(315deg);
+  }
+  38% {
+    transform: translateY(-30px) rotateY(360deg);
+  }
+  49% {
+    transform: translateY(-30px) rotateY(360deg);
+  }
+  50% {
+    transform: translateY(-30px) rotateY(405deg);
+  }
+  51% {
+    transform: translateY(-30px) rotateY(450deg);
+  }
+  52% {
+    transform: translateY(-30px) rotateY(495deg);
+  }
+  53% {
+    transform: translateY(-30px) rotateY(540deg);
+  }
+  54% {
+    transform: translateY(-30px) rotateY(585deg);
+  }
+  55% {
+    transform: translateY(-30px) rotateY(630deg);
+  }
+  56% {
+    transform: translateY(-30px) rotateY(675deg);
+  }
+  57% {
+    transform: translateY(-30px) rotateY(720deg);
+  }
+  70% {
+    transform: translateY(-30px) rotateY(720deg);
+  }
+  100% {
+    transform: translateY(0) rotateY(720deg);
+  }
+}
+
+.congratulation {
+  width: 30vw;
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  background: #000;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.congratulation .pyro {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.congratulation .img-container {
+  padding-top: 30px;
+  width: auto;
+  height: 30%;
+  display: flex;
+  position: relative;
+  justify-content: center;
+}
+
+.img-container .img-winner {
+  height: calc(100% - 30px);
+  position: absolute;
+  animation-name: icon-winner-animation;
+  animation-duration: 3s;
+  animation-delay: 0.5s;
+  animation-iteration-count: 5;
+  z-index: 1;
+}
+
+.winner-names {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+@-webkit-keyframes winner-name-animation {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.2);
+  }
+  70% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.winner-names .winner-name {
+  padding: 12px;
+  border: 1px solid orange;
+  margin: 8px;
+  font-size: 26px;
+  font-weight: bold;
+  background: red;
+  color: white;
+  border-radius: 12px;
+  animation-name: winner-name-animation;
+  animation-duration: 3s;
+  animation-delay: 0.5s;
+  animation-iteration-count: 5;
+  z-index: 1;
+}
+
+/* fire-works */
+
+.pyro>.before, .pyro>.after {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  box-shadow: -120px -218.66667px blue, 248px -16.66667px #00ff84, 190px 16.33333px #002bff, -113px -308.66667px #ff009d, -109px -287.66667px #ffb300, -50px -313.66667px #ff006e, 226px -31.66667px #ff4000, 180px -351.66667px #ff00d0, -12px -338.66667px #00f6ff, 220px -388.66667px #99ff00, -69px -27.66667px #ff0400, -111px -339.66667px #6200ff, 155px -237.66667px #00ddff, -152px -380.66667px #00ffd0, -50px -37.66667px #00ffdd, -95px -175.66667px #a6ff00, -88px 10.33333px #0d00ff, 112px -309.66667px #005eff, 69px -415.66667px #ff00a6, 168px -100.66667px #ff004c, -244px 24.33333px #ff6600, 97px -325.66667px #ff0066, -211px -182.66667px #00ffa2, 236px -126.66667px #b700ff, 140px -196.66667px #9000ff, 125px -175.66667px #00bbff, 118px -381.66667px #ff002f, 144px -111.66667px #ffae00, 36px -78.66667px #f600ff, -63px -196.66667px #c800ff, -218px -227.66667px #d4ff00, -134px -377.66667px #ea00ff, -36px -412.66667px #ff00d4, 209px -106.66667px #00fff2, 91px -278.66667px #000dff, -22px -191.66667px #9dff00, 139px -392.66667px #a6ff00, 56px -2.66667px #0099ff, -156px -276.66667px #ea00ff, -163px -233.66667px #00fffb, -238px -346.66667px #00ff73, 62px -363.66667px #0088ff, 244px -170.66667px #0062ff, 224px -142.66667px #b300ff, 141px -208.66667px #9000ff, 211px -285.66667px #ff6600, 181px -128.66667px #1e00ff, 90px -123.66667px #c800ff, 189px 70.33333px #00ffc8, -18px -383.66667px #00ff33, 100px -6.66667px #ff008c;
+  -moz-animation: 1s bang ease-out infinite backwards, 1s gravity ease-in infinite backwards, 5s position linear infinite backwards;
+  -webkit-animation: 1s bang ease-out infinite backwards, 1s gravity ease-in infinite backwards, 5s position linear infinite backwards;
+  -o-animation: 1s bang ease-out infinite backwards, 1s gravity ease-in infinite backwards, 5s position linear infinite backwards;
+  -ms-animation: 1s bang ease-out infinite backwards, 1s gravity ease-in infinite backwards, 5s position linear infinite backwards;
+  animation: 1s bang ease-out infinite backwards, 1s gravity ease-in infinite backwards, 5s position linear infinite backwards;
+}
+
+.pyro>.after {
+  -moz-animation-delay: 1.25s, 1.25s, 1.25s;
+  -webkit-animation-delay: 1.25s, 1.25s, 1.25s;
+  -o-animation-delay: 1.25s, 1.25s, 1.25s;
+  -ms-animation-delay: 1.25s, 1.25s, 1.25s;
+  animation-delay: 1.25s, 1.25s, 1.25s;
+  -moz-animation-duration: 1.25s, 1.25s, 6.25s;
+  -webkit-animation-duration: 1.25s, 1.25s, 6.25s;
+  -o-animation-duration: 1.25s, 1.25s, 6.25s;
+  -ms-animation-duration: 1.25s, 1.25s, 6.25s;
+  animation-duration: 1.25s, 1.25s, 6.25s;
+}
+
+@-webkit-keyframes bang {
+  from {
+    box-shadow: 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white;
+  }
+}
+
+@-moz-keyframes bang {
+  from {
+    box-shadow: 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white;
+  }
+}
+
+@-o-keyframes bang {
+  from {
+    box-shadow: 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white;
+  }
+}
+
+@-ms-keyframes bang {
+  from {
+    box-shadow: 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white;
+  }
+}
+
+@keyframes bang {
+  from {
+    box-shadow: 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white, 0 0 white;
+  }
+}
+
+@-webkit-keyframes gravity {
+  to {
+    transform: translateY(200px);
+    -moz-transform: translateY(200px);
+    -webkit-transform: translateY(200px);
+    -o-transform: translateY(200px);
+    -ms-transform: translateY(200px);
+    opacity: 0;
+  }
+}
+
+@-moz-keyframes gravity {
+  to {
+    transform: translateY(200px);
+    -moz-transform: translateY(200px);
+    -webkit-transform: translateY(200px);
+    -o-transform: translateY(200px);
+    -ms-transform: translateY(200px);
+    opacity: 0;
+  }
+}
+
+@-o-keyframes gravity {
+  to {
+    transform: translateY(200px);
+    -moz-transform: translateY(200px);
+    -webkit-transform: translateY(200px);
+    -o-transform: translateY(200px);
+    -ms-transform: translateY(200px);
+    opacity: 0;
+  }
+}
+
+@-ms-keyframes gravity {
+  to {
+    transform: translateY(200px);
+    -moz-transform: translateY(200px);
+    -webkit-transform: translateY(200px);
+    -o-transform: translateY(200px);
+    -ms-transform: translateY(200px);
+    opacity: 0;
+  }
+}
+
+@keyframes gravity {
+  to {
+    transform: translateY(200px);
+    -moz-transform: translateY(200px);
+    -webkit-transform: translateY(200px);
+    -o-transform: translateY(200px);
+    -ms-transform: translateY(200px);
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes position {
+  0%, 19.9% {
+    margin-top: 10%;
+    margin-left: 40%;
+  }
+  20%, 39.9% {
+    margin-top: 40%;
+    margin-left: 30%;
+  }
+  40%, 59.9% {
+    margin-top: 20%;
+    margin-left: 70%;
+  }
+  60%, 79.9% {
+    margin-top: 30%;
+    margin-left: 20%;
+  }
+  80%, 99.9% {
+    margin-top: 30%;
+    margin-left: 80%;
+  }
+}
+
+@-moz-keyframes position {
+  0%, 19.9% {
+    margin-top: 10%;
+    margin-left: 40%;
+  }
+  20%, 39.9% {
+    margin-top: 40%;
+    margin-left: 30%;
+  }
+  40%, 59.9% {
+    margin-top: 20%;
+    margin-left: 70%;
+  }
+  60%, 79.9% {
+    margin-top: 30%;
+    margin-left: 20%;
+  }
+  80%, 99.9% {
+    margin-top: 30%;
+    margin-left: 80%;
+  }
+}
+
+@-o-keyframes position {
+  0%, 19.9% {
+    margin-top: 10%;
+    margin-left: 40%;
+  }
+  20%, 39.9% {
+    margin-top: 40%;
+    margin-left: 30%;
+  }
+  40%, 59.9% {
+    margin-top: 20%;
+    margin-left: 70%;
+  }
+  60%, 79.9% {
+    margin-top: 30%;
+    margin-left: 20%;
+  }
+  80%, 99.9% {
+    margin-top: 30%;
+    margin-left: 80%;
+  }
+}
+
+@-ms-keyframes position {
+  0%, 19.9% {
+    margin-top: 10%;
+    margin-left: 40%;
+  }
+  20%, 39.9% {
+    margin-top: 40%;
+    margin-left: 30%;
+  }
+  40%, 59.9% {
+    margin-top: 20%;
+    margin-left: 70%;
+  }
+  60%, 79.9% {
+    margin-top: 30%;
+    margin-left: 20%;
+  }
+  80%, 99.9% {
+    margin-top: 30%;
+    margin-left: 80%;
+  }
+}
+
+@keyframes position {
+  0%, 19.9% {
+    margin-top: 10%;
+    margin-left: 40%;
+  }
+  20%, 39.9% {
+    margin-top: 40%;
+    margin-left: 30%;
+  }
+  40%, 59.9% {
+    margin-top: 20%;
+    margin-left: 70%;
+  }
+  60%, 79.9% {
+    margin-top: 30%;
+    margin-left: 20%;
+  }
+  80%, 99.9% {
+    margin-top: 30%;
+    margin-left: 80%;
+  }
+}
+
+.chat-container {
+  width: 300px;
+  height: 350px;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  border: double 2px gray;
+  transition: all 0.1s;
+  transform-origin: bottom right;
+}
+
+.chat-container.minimum {
+  transform: scale(0);
+}
+
+.chat__content {
+  height: 90%;
+  background: white;
+  overflow-y: scroll;
+  padding-bottom: 16px;
+}
+
+.chat__message {
+  padding: 4px;
+  display: flex;
+  flex-wrap: wrap;
+}
+.chat__message.my{
+  justify-content: flex-end;
+}
+
+.chat__name {
+  color: rgb(143, 146, 150);
+  width: 100%;
+  margin-top: 4px;
+}
+
+.chat__message.my .chat__name {
+  visibility: hidden;
+  text-align: right;
+}
+
+.chat__text {
+  background: rgb(242, 246, 249);
+  border-radius: 4px;
+  padding: 4px 4px 4px 8px;
+  display: inline-flex;
+}
+
+.chat__message.my .chat__text {
+  float: right;
+  background: rgb(219, 244, 253);
+}
+
+.chat__input__container {
+  display: flex;
+  height: 32px;
+}
+
+.chat__input {
+  width: 100%;
+}
+
+.chat-widget {
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  background: white;
+  border-radius: 25px;
+  border: 1px solid blue;
+  bottom: 12px;
+  right: 12px;
+  box-shadow: 0px 0px 5px 2px blue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.chat-widget--new {
+  color: red;
+  box-shadow: 0px 0px 5px 2px red;
+  border: red;
+  animation: 1s widget-new ease-in-out infinite backwards;
+}
+
+@keyframes widget-new {
+  0% {
+    box-shadow: 0px 0px 0px 0px red;
+  }
+  50% {
+    box-shadow: 0px 0px 5px 2px red;
+  }
+  100% {
+    box-shadow: 0px 0px 0px 0px red;
+  }
 }

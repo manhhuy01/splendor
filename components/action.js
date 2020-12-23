@@ -24,7 +24,7 @@ const actionComponent = ({ socket, room }) => {
   }, [state]);
 
   const finishCollect = useCallback(() => {
-    // vaildate
+    // validate
     // if ok
     post('collect_token', { roomId: room.id, socketId: socket.id, token: state.token })
       .then((res) => res.json()

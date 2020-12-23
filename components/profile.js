@@ -1,5 +1,7 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable no-return-assign */
 /* eslint-disable jsx-a11y/alt-text */
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import constants from '../constants';
 import TokenProfile from './tokenProfile';
 import { ActionContext } from '../utils/context';
@@ -29,6 +31,13 @@ const profileComponent = ({
       });
     }
   };
+
+  useEffect(() => {
+    const sumToken = (token) => Object.keys(token).reduce((agg, item) => agg += token[item], 0);
+    if (!hidden && sumToken(player.token) > 10) {
+      alert('Token đã lớn hơn 10, nhả token đi bạn');
+    }
+  }, [player, hidden]);
 
   const onClickDepositCard = (card) => {
     if (isBuyCard) {

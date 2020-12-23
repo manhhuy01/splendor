@@ -38,7 +38,7 @@ const cardsComponent = ({ card_table: cardTable }) => {
             }
             {
               cardTable.up[level].map((card) => (
-                <img className="card card--up" src={`/${card.image}.png`} onClick={onClickCard(card)} />
+                <img key={card.id} className="card card--up" src={`/${card.image}.png`} onClick={onClickCard(card)} />
               ))
             }
           </div>
