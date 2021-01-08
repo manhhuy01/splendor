@@ -14,7 +14,7 @@ const gameComponent = ({ socket, game, room }) => {
   useEffect(() => {
     if (game.winners) {
       const names = game.winners.map(
-        (turn) => room.players.find((player) => player.turn === turn),
+        (turn) => room.players.find((player) => +player.turn === +turn),
       ).filter(Boolean).map((x) => x.name);
       setWinners(names);
     }
