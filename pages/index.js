@@ -23,18 +23,29 @@ export default function Home() {
     if (socket) {
       socket.on('roomInfo', (data) => {
         setRoomInfo(data);
+        const room = data.rooms[roomId];
+        if (room) {
+          dispatch({ type: 'set_room_info', room });
+        }
       });
       socket.on('notification', (data) => {
         console.log(data);
       });
     }
-  }, [socket]);
+  }, [socket, roomId]);
+
+  useEffect(() => {
+    if (socket?.id) {
+      dispatch({ type: 'set_socket', socket });
+    }
+  }, [socket?.id]);
 
   useEffect(() => {
     if (roomId) {
       socket.on(`room.${roomId}.info`, (room) => {
         console.log('room', room);
         setRoomJoined(room);
+        dispatch({ type: 'set_room_info', room });
       });
       socket.on(`room.${roomId}.chat`, (room) => {
         console.log('messages', room.messages);

@@ -1,50 +1,28 @@
-import { useContext } from 'react';
-import { ActionContext } from '../utils/context';
+import Card from './card';
 
-const cardsComponent = ({ card_table: cardTable }) => {
-  const { state, dispatch } = useContext(ActionContext);
-  const isDeposit = state.actionType === 'deposit_card';
-  const isBuyCard = state.actionType === 'buy_card';
-  const onClickCard = (card) => () => {
-    if (isDeposit) {
-      dispatch({
-        type: 'deposit_card',
-        deposit_card_id: card.id,
-        card,
-      });
-    }
-    if (isBuyCard) {
-      dispatch({
-        type: 'buy_card',
-        card,
-      });
-    }
-  };
-  const onClickCartDown = (level) => () => {
-    if (isDeposit) {
-      dispatch({
-        type: 'deposit_card',
-        deposit_card_level: level,
-      });
-    }
-  };
-  return (
-    <div className={`card-table-container ${isDeposit || isBuyCard ? 'selecting' : ''}`}>
-      {
+const CardsComponent = ({ card_table: cardTable }) => (
+  <div className="card-table-container">
+    {
         [3, 2, 1].map((level) => (
           <div key={level} className="card-level-row">
             {
-              !!cardTable.down[level].length && <img className="card" src={`/${level}_.png`} onClick={onClickCartDown(level)} />
+              !!cardTable.down[level].length
+              && <Card key={level} level={level} isCanDeposit />
             }
             {
               cardTable.up[level].map((card) => (
-                <img key={card.id} className="card card--up" src={`/${card.image}.png`} onClick={onClickCard(card)} />
+                <Card
+                  key={card.id}
+                  isCardUp
+                  card={card}
+                  isCanBuy
+                  isCanDeposit
+                />
               ))
             }
           </div>
         ))
       }
-    </div>
-  );
-};
-export default cardsComponent;
+  </div>
+);
+export default CardsComponent;

@@ -3,15 +3,19 @@ import { ActionContext } from '../utils/context';
 
 const tokenComponent = ({ token }) => {
   const { state, dispatch } = useContext(ActionContext);
-  const isCollect = state.actionType === 'collect_token';
+
+  const player = state.room.players.find((x) => x.socketId === state.socket.id);
+  if (!player) return null;
+  const isMyTurn = state.room.game.currentTurn === player.turn;
 
   const collectToken = (color) => () => {
-    if (!isCollect) return;
-    dispatch({ type: 'collect_token', color });
+    if (isMyTurn) {
+      dispatch({ type: 'collect_token', color });
+    }
   };
   return (
     <div className="token-container">
-      <div className={`token-normal ${isCollect ? 'selecting' : ''}`}>
+      <div className="token-normal ">
         {
           Object.keys(token).reduce((agg, color) => {
             if (!token[color] || color === 'gold') return agg;
@@ -24,7 +28,7 @@ const tokenComponent = ({ token }) => {
           }, [])
         }
       </div>
-      <div className="token-gold">
+      <div className="token-normal">
         {
           Object.keys(token).reduce((agg, color) => {
             if (!token[color] || color !== 'gold') return agg;

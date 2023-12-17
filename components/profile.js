@@ -1,11 +1,11 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-return-assign */
 /* eslint-disable jsx-a11y/alt-text */
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import constants from '../constants';
 import TokenProfile from './tokenProfile';
 import { ActionContext } from '../utils/context';
-import Duke from './duke';
+import Card from './card';
 
 const getLevelCard = (cardId) => {
   if (cardId < 41) return 1;
@@ -16,17 +16,18 @@ const getLevelCard = (cardId) => {
 
 const profileComponent = ({
   player, user, currentTurn, hidden,
+  isCurrentPlayer,
 }) => {
   if (!player || !user) return null;
   const isMyTurn = user.turn === currentTurn;
 
   const { state, dispatch } = useContext(ActionContext);
   const isBuyCard = state.actionType === 'buy_card';
-  const isReturnToken = state.actionType === 'return_token';
+  const [isReturnToken, setIsReturnToken] = useState(false);
   const onClickToken = (color) => {
-    if (state.actionType) {
+    if (isReturnToken) {
       dispatch({
-        type: state.actionType,
+        type: 'return_token',
         color,
       });
     }
@@ -34,39 +35,16 @@ const profileComponent = ({
 
   useEffect(() => {
     const sumToken = (token) => Object.keys(token).reduce((agg, item) => agg += token[item], 0);
-    if (!hidden && sumToken(player.token) > 10) {
+    if (!hidden && sumToken(player.token) > 10 && !isReturnToken) {
       alert('Token đã lớn hơn 10, nhả token đi bạn');
+      setIsReturnToken(true);
     }
   }, [player, hidden]);
 
-  const onClickDepositCard = (card) => {
-    if (isBuyCard) {
-      dispatch({
-        type: 'buy_card',
-        card,
-      });
-    }
-  };
   return (
-    <div className={`profile ${isMyTurn ? 'my-turn' : ''} `}>
+    <div className={`profile ${isMyTurn ? 'current-turn' : ''} ${isCurrentPlayer ? 'current-player' : ''}`}>
       <div className="profile__name">{user.name}</div>
       <div className="profile__game">
-        <div className={`profile__game__deposit ${isBuyCard && !hidden ? 'selecting' : ''}`}>
-          {
-            !!player.deposit_cards.length && player.deposit_cards.map((card) => {
-              const cardlevel = getLevelCard(card.id);
-              if (hidden) return <img className="profile__deposit__card--down" key={card.id} src={`/${cardlevel}_.png`} />;
-              return (
-                <img
-                  className="profile__deposit__card"
-                  key={card.id}
-                  src={`/${card.image}.png`}
-                  onClick={() => onClickDepositCard(card)}
-                />
-              );
-            })
-          }
-        </div>
         <div className="profile__game__token-cards">
           <div className="profile__game__token">
             <TokenProfile
@@ -78,28 +56,36 @@ const profileComponent = ({
           <div className="profile__game__cards">
             {
               constants.color.reduce((agg, color) => {
+                if (color === 'gold') return agg;
                 const cards = player.cards.filter((x) => x.property === color);
-
-                if (cards.length) {
-                  return [
-                    ...agg,
-                    <div key={color} className="profile__card__column">
-                      {
-                        cards.map((card) => <img key={card.id} src={`/${card.image}.png`} className="profile__card" />)
-                      }
-                    </div>];
-                }
-
-                return agg;
+                return [
+                  ...agg,
+                  <div key={color} className={`profile__card profile__card--${cards.length ? color : 'empty'}`}>
+                    {cards.length}
+                  </div>];
               }, [])
             }
           </div>
         </div>
-        <div className="profile__game__duke">
+        <div className={`profile__game__deposit ${isBuyCard && !hidden ? 'selecting' : ''}`}>
+          {
+            !!player.deposit_cards.length && player.deposit_cards.map((card) => {
+              const cardlevel = getLevelCard(card.id);
+              if (hidden) return <Card key={card.id} level={cardlevel} noAction />;
+              return (
+                <Card key={card.id} card={card} isCardUp isCanBuy />
+              );
+            })
+          }
+        </div>
+        {/* <div className="profile__game__duke">
           {
             !!player.dukes.length && <Duke dukes={player.dukes} />
           }
-        </div>
+        </div> */}
+      </div>
+      <div className="profile__pv">
+        {player.pv}
       </div>
     </div>
   );

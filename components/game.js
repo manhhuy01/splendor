@@ -1,15 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import Profile from './profile';
-import ActionBoard from './action';
+import ActionBoard from './actionBoard';
 import DukeComponent from './duke';
 import TokenComponent from './token';
 import CardComponent from './cards';
 import Congratulation from './congratulation';
+import { ActionContext } from '../utils/context';
 
 const gameComponent = ({ socket, game, room }) => {
   const getPlayer = (turn) => room.players.find((x) => x.turn === turn);
   const currentUser = room.players.find((x) => x.socketId === socket.id);
   const [winners, setWinners] = useState([]);
+  const { state } = useContext(ActionContext);
 
   useEffect(() => {
     if (game.winners) {
@@ -19,42 +21,38 @@ const gameComponent = ({ socket, game, room }) => {
       setWinners(names);
     }
   }, [game.finished]);
+
+  let arrIndex = [1, 2, 3, 4];
+  arrIndex = arrIndex.slice(currentUser.turn, 4)
+    .concat(arrIndex.slice(0, currentUser.turn - 1));
   return (
     <div className="game">
       <div className="game__left">
+        {
+          arrIndex.map((turn) => (
+            <Profile
+              key={turn}
+              player={state.room.game.players[turn]}
+              user={getPlayer(turn)}
+              currentTurn={game.currentTurn}
+              hidden={currentUser.turn !== turn}
+            />
+          ))
+        }
         <Profile
-          player={room.game.players[1]}
-          user={getPlayer(1)}
+          player={state.room.game.players[currentUser.turn]}
+          user={getPlayer(currentUser.turn)}
           currentTurn={game.currentTurn}
-          hidden={currentUser.turn !== 1}
+          isCurrentPlayer
         />
-        <Profile
-          player={room.game.players[4]}
-          user={getPlayer(4)}
-          currentTurn={game.currentTurn}
-          hidden={currentUser.turn !== 4}
-        />
+
       </div>
       <div className="game__center">
         <div className="table-game">
           <DukeComponent dukes={game.table.dukes} />
           <CardComponent card_table={game.table.card_table} />
-          <TokenComponent token={game.table.token} />
+          <TokenComponent token={state.room.game.table.token} />
         </div>
-      </div>
-      <div className="game__right">
-        <Profile
-          player={room.game.players[2]}
-          user={getPlayer(2)}
-          currentTurn={game.currentTurn}
-          hidden={currentUser.turn !== 2}
-        />
-        <Profile
-          player={room.game.players[3]}
-          user={getPlayer(3)}
-          currentTurn={game.currentTurn}
-          hidden={currentUser.turn !== 3}
-        />
       </div>
       {
         !game.finished && <ActionBoard socket={socket} room={room} />

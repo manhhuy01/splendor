@@ -1,11 +1,11 @@
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import constants from '../constants';
 
 const useSocket = (cb) => {
   const [activeSocket, setActiveSocket] = useState(null);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const socket = io(constants.server);
     // debug("Socket updated", { socket, activeSocket });
     if (activeSocket || !socket) return;
