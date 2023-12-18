@@ -14,8 +14,8 @@ const tokenComponent = ({ token }) => {
     }
   };
   return (
-    <div className="token-container">
-      <div className="token-normal ">
+    <div className="token-container token--column">
+      <div className="token-normal">
         {
           Object.keys(token).reduce((agg, color) => {
             if (!token[color] || color === 'gold') return agg;

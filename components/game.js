@@ -49,9 +49,9 @@ const gameComponent = ({ socket, game, room }) => {
       </div>
       <div className="game__center">
         <div className="table-game">
-          <DukeComponent dukes={game.table.dukes} />
           <CardComponent card_table={game.table.card_table} />
           <TokenComponent token={state.room.game.table.token} />
+          <DukeComponent dukes={game.table.dukes} />
         </div>
       </div>
       {

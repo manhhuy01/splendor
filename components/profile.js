@@ -22,7 +22,7 @@ const profileComponent = ({
   const isMyTurn = user.turn === currentTurn;
 
   const { state, dispatch } = useContext(ActionContext);
-  const isBuyCard = state.actionType === 'buy_card';
+  const isReturningToken = state.actionType === 'return_token';
   const [isReturnToken, setIsReturnToken] = useState(false);
   const onClickToken = (color) => {
     if (isReturnToken) {
@@ -39,7 +39,10 @@ const profileComponent = ({
       alert('Token đã lớn hơn 10, nhả token đi bạn');
       setIsReturnToken(true);
     }
-  }, [player, hidden]);
+    if (sumToken <= 10 && !isReturningToken) {
+      setIsReturnToken(false);
+    }
+  }, [player, hidden, isReturningToken]);
 
   return (
     <div className={`profile ${isMyTurn ? 'current-turn' : ''} ${isCurrentPlayer ? 'current-player' : ''}`}>
@@ -49,7 +52,6 @@ const profileComponent = ({
           <div className="profile__game__token">
             <TokenProfile
               token={player.token}
-              selecting={(isBuyCard || isReturnToken) && !hidden}
               onClickToken={onClickToken}
             />
           </div>
@@ -67,7 +69,7 @@ const profileComponent = ({
             }
           </div>
         </div>
-        <div className={`profile__game__deposit ${isBuyCard && !hidden ? 'selecting' : ''}`}>
+        <div className="profile__game__deposit">
           {
             !!player.deposit_cards.length && player.deposit_cards.map((card) => {
               const cardlevel = getLevelCard(card.id);
