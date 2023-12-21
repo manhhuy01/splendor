@@ -1,13 +1,17 @@
 import { useCallback, useContext } from 'react';
+import { useAtom } from 'jotai';
 import { post } from '../utils/requets';
 import { ActionContext } from '../utils/context';
 import TokenProfile from './tokenProfile';
+
+import { isReturnToken } from '../atoms/action';
 
 const actionComponent = ({ socket, room }) => {
   const { state, dispatch } = useContext(ActionContext);
   const player = room.players.find((x) => x.socketId === socket.id);
   if (!player) return null;
   const isMyTurn = room.game.currentTurn === player.turn;
+  const [, setIsReturnToken] = useAtom(isReturnToken);
 
   const throwTurn = useCallback(
     () => {
@@ -56,6 +60,7 @@ const actionComponent = ({ socket, room }) => {
             alert(data.error);
           }
         }));
+    setIsReturnToken(false);
     dispatch({
       type: 'reset',
     });

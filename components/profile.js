@@ -1,11 +1,13 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-return-assign */
 /* eslint-disable jsx-a11y/alt-text */
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
+import { useAtom } from 'jotai';
 import constants from '../constants';
 import TokenProfile from './tokenProfile';
 import { ActionContext } from '../utils/context';
 import Card from './card';
+import { isReturnToken } from '../atoms/action';
 
 const getLevelCard = (cardId) => {
   if (cardId < 41) return 1;
@@ -21,9 +23,9 @@ const profileComponent = ({
   if (!player || !user) return null;
   const isMyTurn = user.turn === currentTurn;
 
-  const { state, dispatch } = useContext(ActionContext);
-  const isReturningToken = state.actionType === 'return_token';
-  const [isReturnToken, setIsReturnToken] = useState(false);
+  const { dispatch } = useContext(ActionContext);
+  const [_isReturnToken, setIsReturnToken] = useAtom(isReturnToken);
+
   const onClickToken = (color) => {
     if (isReturnToken) {
       dispatch({
@@ -35,14 +37,11 @@ const profileComponent = ({
 
   useEffect(() => {
     const sumToken = (token) => Object.keys(token).reduce((agg, item) => agg += token[item], 0);
-    if (!hidden && sumToken(player.token) > 10 && !isReturnToken) {
+    if (isCurrentPlayer && isMyTurn && sumToken(player.token) > 10 && !_isReturnToken) {
       alert('Token đã lớn hơn 10, nhả token đi bạn');
       setIsReturnToken(true);
     }
-    if (sumToken <= 10 && !isReturningToken) {
-      setIsReturnToken(false);
-    }
-  }, [player, hidden, isReturningToken]);
+  }, [player, hidden, _isReturnToken, isCurrentPlayer]);
 
   return (
     <div className={`profile ${isMyTurn ? 'current-turn' : ''} ${isCurrentPlayer ? 'current-player' : ''}`}>
