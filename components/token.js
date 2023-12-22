@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import { useContext } from 'react';
 import { ActionContext } from '../utils/context';
 
@@ -20,9 +21,9 @@ const tokenComponent = ({ token }) => {
           Object.keys(token).reduce((agg, color) => {
             if (!token[color] || color === 'gold') return agg;
             return [...agg, (
-              <div key={color} className="token">
+              <div key={color} className={`token token--${color}`} onClick={collectToken(color)}>
                 <div className="token__number">{token[color]}</div>
-                <img src={`/${color}.png`} onClick={collectToken(color)} />
+                {/* <img src={`/${color}.png`} onClick={collectToken(color)} /> */}
               </div>
             )];
           }, [])
@@ -33,9 +34,9 @@ const tokenComponent = ({ token }) => {
           Object.keys(token).reduce((agg, color) => {
             if (!token[color] || color !== 'gold') return agg;
             return [...agg, (
-              <div key={color} className="token">
+              <div key={color} className={`token token--${color}`}>
                 <div className="token__number">{token[color]}</div>
-                <img src={`/${color}.png`} />
+                {/* <img src={`/${color}.png`} /> */}
               </div>
             )];
           }, [])

@@ -1,10 +1,28 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import { useCallback, useContext } from 'react';
 import { useAtom } from 'jotai';
 import { post } from '../utils/requets';
 import { ActionContext } from '../utils/context';
-import TokenProfile from './tokenProfile';
 
 import { isReturnToken } from '../atoms/action';
+import constants from '../constants';
+
+const TokenComponent = ({ token, onClickToken }) => (
+  <div className="token-container">
+    {
+      constants.color.reduce((agg, color) => [...agg, (
+        token[color]
+          ? (
+            <div className={`token token--${color}`} onClick={() => onClickToken && onClickToken(color)}>
+              <div className="token__number">
+                {token[color]}
+              </div>
+            </div>
+          ) : null
+      )], [])
+    }
+  </div>
+);
 
 const actionComponent = ({ socket, room }) => {
   const { state, dispatch } = useContext(ActionContext);
@@ -71,30 +89,24 @@ const actionComponent = ({ socket, room }) => {
       {
         isMyTurn && !state.actionType && (
           <div className="action-container">
-            <button type="button" onClick={throwTurn}>Bỏ lượt</button>
+            <button className="action__cancel" type="button" onClick={throwTurn}>Bỏ lượt</button>
           </div>
         )
       }
       {
         isMyTurn && state.actionType === 'collect_token' && (
-          <div className="action__collect-token">
-            <span>Đang bốc</span>
-            <TokenProfile token={state.token || {}} onClickToken={undoCollectToken} />
-            <div className="action__confirm">
-              <button type="button" onClick={finishCollect}>OK</button>
-            </div>
+          <div className="action-container">
+            <TokenComponent token={state.token || {}} onClickToken={undoCollectToken} />
+            <button className="action__confirm" type="button" onClick={finishCollect}>OK</button>
 
           </div>
         )
       }
       {
         isMyTurn && state.actionType === 'return_token' && (
-          <div className="action__return">
-            <span>Trả token</span>
-            <TokenProfile token={state.token || {}} onClickToken={undoReturnToken} />
-            <div className="action__confirm">
-              <button type="button" onClick={finishReturnToken}>OK</button>
-            </div>
+          <div className="action-container">
+            <TokenComponent token={state.token || {}} onClickToken={undoReturnToken} />
+            <button className="action__confirm" type="button" onClick={finishReturnToken}>OK</button>
 
           </div>
         )

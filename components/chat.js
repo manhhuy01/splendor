@@ -14,7 +14,7 @@ const chat = ({ messages, send, socketId }) => {
       const widget = document.getElementById('chat-widget');
       const widgetBoundary = widget.getBoundingClientRect();
       chatContainer.style.bottom = `${widgetBoundary.height + 16}px`;
-      chatContainer.style.left = `${widgetBoundary.right - 300}px`;
+      chatContainer.style.left = `${widgetBoundary.right}px`;
     }, 0.5);
   }, []);
   const sendHandle = useCallback(
@@ -71,7 +71,7 @@ const chat = ({ messages, send, socketId }) => {
       const widget = document.getElementById('chat-widget');
       const widgetBoundary = widget.getBoundingClientRect();
       chatContainer.style.bottom = `${widgetBoundary.height + 16}px`;
-      chatContainer.style.left = `${widgetBoundary.right - 300}px`;
+      chatContainer.style.left = `${widgetBoundary.right - 60}px`;
       setIsNewMessage(false);
     },
     [isHidden],

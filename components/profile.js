@@ -43,6 +43,8 @@ const profileComponent = ({
     }
   }, [player, hidden, _isReturnToken, isCurrentPlayer]);
 
+  const totalToken = Object.keys(player.token).reduce((agg, item) => agg += player.token[item], 0);
+
   return (
     <div className={`profile ${isMyTurn ? 'current-turn' : ''} ${isCurrentPlayer ? 'current-player' : ''}`}>
       <div className="profile__name">{user.name}</div>
@@ -67,6 +69,9 @@ const profileComponent = ({
               }, [])
             }
           </div>
+          {
+            isCurrentPlayer && <div className="profile__game__total-token">{`${totalToken}/10`}</div>
+          }
         </div>
         <div className="profile__game__deposit">
           {

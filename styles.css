@@ -26,7 +26,7 @@
 
 .duke-container {
   width: 20%;
-  height: 100%;
+  height: 80%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -51,12 +51,13 @@
   gap: 4px;
 }
 
-.token--column{
+.token--column {
   flex-direction: column;
 }
 
 .token--column .token-normal {
   flex-direction: column;
+  gap: 4px;
 }
 
 .token--column .token-normal .token {
@@ -64,16 +65,21 @@
 }
 
 .token-container .token {
-  width: 2vw;
+  text-align: center;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: 1px solid transparent;
-  position: relative;
+  width: 2vw;
+  height: 2vw;
+  border-radius: 2vw;
+  border: 1px solid black;
+  cursor: pointer;
 }
 
-.token-container .token img {
-  width: 100%;
+.token-container .token.empty {
+  border: 1px solid transparent;
+}
+
+.token__number {
+  margin: auto;
 }
 
 .token-normal {
@@ -86,21 +92,46 @@
   height: 100%;
 }
 
-.token__number {
-  text-align: center;
-  display: flex;
-  position: absolute;
+.token--white {
+  background: rgb(255, 255, 255);
+  background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(215, 217, 228, 1) 100%);
+  color: black;
+}
+
+.token--blue {
+  background: rgb(18, 159, 210);
+  background: radial-gradient(circle, rgba(18, 159, 210, 1) 0%, rgba(18, 25, 73, 1) 100%);
   color: white;
-  transform: translate(-50%, -50%);  
-  top: 50%;
-  left: 50%;
+}
+
+.token--green {
+  background: rgb(30, 212, 62);
+  background: radial-gradient(circle, rgba(30, 212, 62, 1) 0%, rgba(28, 129, 18, 1) 100%);
+  color: white;
+}
+
+.token--red {
+  background: rgb(255, 0, 0);
+  background: radial-gradient(circle, rgba(255, 0, 0, 1) 0%, rgba(180, 12, 12, 1) 100%);
+  color: white;
+}
+
+.token--black {
+  background: rgb(142, 121, 121);
+  background: radial-gradient(circle, rgba(142, 121, 121, 1) 0%, rgba(51, 31, 31, 1) 100%);
+  color: white;
+}
+
+.token--gold {
+  background: rgb(255, 215, 0);
+  background: radial-gradient(circle, rgba(255, 215, 0, 1) 0%, rgba(182, 154, 0, 1) 100%);
+  color: black;
 }
 
 .table-game {
-  padding: 40px;
   display: flex;
   align-items: center;
-  height: calc(100% - 200px);
+  height: 75vh;
   gap: 20px;
 }
 
@@ -108,9 +139,10 @@
   width: 10%;
 }
 
-.table-game .token-container .token{
-  width: 100%;
-  gap: 8px;
+.table-game .token-container .token {
+  width: 3vw;
+  height: 3vw;
+  border-radius: 3vw;
 }
 
 .table-game .token img {
@@ -136,7 +168,7 @@
   width: 100%;
   height: 33%;
   justify-content: center;
-  align-items: center;  
+  align-items: center;
   gap: 4px;
 
 }
@@ -186,8 +218,20 @@
   flex-direction: column;
 }
 
+
+
 .profile.current-player {
-  margin-top: auto;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 40vw;
+  transform: translate(-50%, 0);
+  background: white;
+
+}
+
+.profile.current-player .profile__game__deposit .card {
+  width: 6vw;
 }
 
 .profile__name {
@@ -200,11 +244,14 @@
   display: flex;
   position: relative;
   margin: auto;
+  gap: 4px;
 }
 
 .profile__game__deposit {
   display: flex;
   align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
 }
 
 .profile__deposit__card {
@@ -213,7 +260,7 @@
 }
 
 .profile__game__deposit .card {
-  width: 30%;
+  width: 3vw;
 }
 
 .profile__deposit__card:hover {
@@ -221,12 +268,13 @@
 }
 
 .profile__game__deposit img {
-  margin: 4px 0px;
+  margin: 0px 0px;
 }
 
 .profile__game__token-cards {
   display: flex;
   flex-direction: column;
+  gap: 4px;
 }
 
 .profile__game__token {
@@ -267,28 +315,28 @@
 }
 
 .profile__card--white {
-  background-color: white;
+  background-color: #FEFEFE;
   color: black;
 }
 
 .profile__card--blue {
-  background-color: blue;
+  background-color: #194D7F;
   color: white;
 }
 
 
 .profile__card--green {
-  background-color: green;
+  background-color: #1D9D22;
   color: white;
 }
 
 .profile__card--red {
-  background-color: red;
+  background-color: #CD0A09;
   color: white;
 }
 
 .profile__card--black {
-  background-color: black;
+  background-color: #554140;
   color: white;
 }
 
@@ -296,12 +344,11 @@
 .action-board {
   position: absolute;
   bottom: 0;
-  width: 30%;
-  left: 34%;
-  height: 100px;
+  width: 25vw;
+  right: 2vw;
+  height: 20vh;
   background: gray;
   border: 1px solid gray;
-  margin-bottom: 12px;
   transition: all 0.3s;
   border-radius: 8px;
   display: flex;
@@ -317,52 +364,22 @@
 .action-container {
   display: flex;
   width: 100%;
-  align-items: flex-end;
-  justify-content: space-around;
+  align-items: center;
+  justify-content: space-between;
 }
+
 
 .action-container button {
-  margin: 2px;
+  width: 10vw;
+  height: 5vw;
+  background: green;
+  color: white;
+  border-radius: 1vw;
+  margin-left: auto;
 }
 
-.action__confirm {
-  position: absolute;
-  right: 5px;
-  top: 5px;
-}
-
-.action__confirm button {
-  margin-right: 4px;
-}
-
-.action__buy {
-  display: flex;
-  height: 100%;
-  width: 100%;
-  flex-direction: column;
-}
-
-.action__buy .token-container .token {
-  width: 15%;
-}
-
-.action-buy__material {
-  display: flex;
-  height: 100%;
-  width: 100%;
-  flex-direction: row;
-}
-
-.action-buy__material .card {
-  height: 80%;
-}
-
-.action__collect-token {
-  width: 80%;
-}
-
-.action__deposit-card .card {
-  height: 80%;
+.action-container .action__cancel {
+  background: red;
 }
 
 .selecting {
@@ -395,63 +412,83 @@
   0% {
     transform: translateY(0)
   }
+
   30% {
     transform: translateY(-30px)
   }
+
   31% {
     transform: translateY(-30px) rotateY(45deg);
   }
+
   32% {
     transform: translateY(-30px) rotateY(90deg);
   }
+
   33% {
     transform: translateY(-30px) rotateY(135deg);
   }
+
   34% {
     transform: translateY(-30px) rotateY(180deg);
   }
+
   35% {
     transform: translateY(-30px) rotateY(225deg);
   }
+
   36% {
     transform: translateY(-30px) rotateY(270deg);
   }
+
   37% {
     transform: translateY(-30px) rotateY(315deg);
   }
+
   38% {
     transform: translateY(-30px) rotateY(360deg);
   }
+
   49% {
     transform: translateY(-30px) rotateY(360deg);
   }
+
   50% {
     transform: translateY(-30px) rotateY(405deg);
   }
+
   51% {
     transform: translateY(-30px) rotateY(450deg);
   }
+
   52% {
     transform: translateY(-30px) rotateY(495deg);
   }
+
   53% {
     transform: translateY(-30px) rotateY(540deg);
   }
+
   54% {
     transform: translateY(-30px) rotateY(585deg);
   }
+
   55% {
     transform: translateY(-30px) rotateY(630deg);
   }
+
   56% {
     transform: translateY(-30px) rotateY(675deg);
   }
+
   57% {
     transform: translateY(-30px) rotateY(720deg);
   }
+
   70% {
     transform: translateY(-30px) rotateY(720deg);
   }
+
   100% {
     transform: translateY(0) rotateY(720deg);
   }
@@ -507,12 +544,15 @@
   0% {
     transform: scale(1);
   }
+
   30% {
     transform: scale(1.2);
   }
+
   70% {
     transform: scale(1.2);
   }
+
   100% {
     transform: scale(1);
   }
@@ -536,7 +576,8 @@
 
 /* fire-works */
 
-.pyro>.before, .pyro>.after {
+.pyro>.before,
+.pyro>.after {
   position: absolute;
   width: 5px;
   height: 5px;
@@ -648,129 +689,179 @@
 }
 
 @-webkit-keyframes position {
-  0%, 19.9% {
+
+  0%,
+  19.9% {
     margin-top: 10%;
     margin-left: 40%;
   }
-  20%, 39.9% {
+
+  20%,
+  39.9% {
     margin-top: 40%;
     margin-left: 30%;
   }
-  40%, 59.9% {
+
+  40%,
+  59.9% {
     margin-top: 20%;
     margin-left: 70%;
   }
-  60%, 79.9% {
+
+  60%,
+  79.9% {
     margin-top: 30%;
     margin-left: 20%;
   }
-  80%, 99.9% {
+
+  80%,
+  99.9% {
     margin-top: 30%;
     margin-left: 80%;
   }
 }
 
 @-moz-keyframes position {
-  0%, 19.9% {
+
+  0%,
+  19.9% {
     margin-top: 10%;
     margin-left: 40%;
   }
-  20%, 39.9% {
+
+  20%,
+  39.9% {
     margin-top: 40%;
     margin-left: 30%;
   }
-  40%, 59.9% {
+
+  40%,
+  59.9% {
     margin-top: 20%;
     margin-left: 70%;
   }
-  60%, 79.9% {
+
+  60%,
+  79.9% {
     margin-top: 30%;
     margin-left: 20%;
   }
-  80%, 99.9% {
+
+  80%,
+  99.9% {
     margin-top: 30%;
     margin-left: 80%;
   }
 }
 
 @-o-keyframes position {
-  0%, 19.9% {
+
+  0%,
+  19.9% {
     margin-top: 10%;
     margin-left: 40%;
   }
-  20%, 39.9% {
+
+  20%,
+  39.9% {
     margin-top: 40%;
     margin-left: 30%;
   }
-  40%, 59.9% {
+
+  40%,
+  59.9% {
     margin-top: 20%;
     margin-left: 70%;
   }
-  60%, 79.9% {
+
+  60%,
+  79.9% {
     margin-top: 30%;
     margin-left: 20%;
   }
-  80%, 99.9% {
+
+  80%,
+  99.9% {
     margin-top: 30%;
     margin-left: 80%;
   }
 }
 
 @-ms-keyframes position {
-  0%, 19.9% {
+
+  0%,
+  19.9% {
     margin-top: 10%;
     margin-left: 40%;
   }
-  20%, 39.9% {
+
+  20%,
+  39.9% {
     margin-top: 40%;
     margin-left: 30%;
   }
-  40%, 59.9% {
+
+  40%,
+  59.9% {
     margin-top: 20%;
     margin-left: 70%;
   }
-  60%, 79.9% {
+
+  60%,
+  79.9% {
     margin-top: 30%;
     margin-left: 20%;
   }
-  80%, 99.9% {
+
+  80%,
+  99.9% {
     margin-top: 30%;
     margin-left: 80%;
   }
 }
 
 @keyframes position {
-  0%, 19.9% {
+
+  0%,
+  19.9% {
     margin-top: 10%;
     margin-left: 40%;
   }
-  20%, 39.9% {
+
+  20%,
+  39.9% {
     margin-top: 40%;
     margin-left: 30%;
   }
-  40%, 59.9% {
+
+  40%,
+  59.9% {
     margin-top: 20%;
     margin-left: 70%;
   }
-  60%, 79.9% {
+
+  60%,
+  79.9% {
     margin-top: 30%;
     margin-left: 20%;
   }
-  80%, 99.9% {
+
+  80%,
+  99.9% {
     margin-top: 30%;
     margin-left: 80%;
   }
 }
 
 .chat-container {
-  width: 300px;
-  height: 350px;
+  width: 30vw;
+  height: 70vh;
   position: absolute;
   display: flex;
   flex-direction: column;
   border: double 2px gray;
   transition: all 0.1s;
-  transform-origin: bottom right;
+  transform-origin: bottom left;
 }
 
 .chat-container.minimum {
@@ -778,7 +869,7 @@
 }
 
 .chat__content {
-  height: 90%;
+  height: 100%;
   background: white;
   overflow-y: scroll;
   padding-bottom: 16px;
@@ -789,7 +880,8 @@
   display: flex;
   flex-wrap: wrap;
 }
-.chat__message.my{
+
+.chat__message.my {
   justify-content: flex-end;
 }
 
@@ -833,7 +925,7 @@
   border-radius: 25px;
   border: 1px solid blue;
   bottom: 12px;
-  right: 12px;
+  left: 12px;
   box-shadow: 0px 0px 5px 2px blue;
   display: flex;
   justify-content: center;
@@ -852,9 +944,11 @@
   0% {
     box-shadow: 0px 0px 0px 0px red;
   }
+
   50% {
     box-shadow: 0px 0px 5px 2px red;
   }
+
   100% {
     box-shadow: 0px 0px 0px 0px red;
   }

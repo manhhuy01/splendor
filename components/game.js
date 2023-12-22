@@ -39,12 +39,6 @@ const gameComponent = ({ socket, game, room }) => {
             />
           ))
         }
-        <Profile
-          player={state.room.game.players[currentUser.turn]}
-          user={getPlayer(currentUser.turn)}
-          currentTurn={game.currentTurn}
-          isCurrentPlayer
-        />
 
       </div>
       <div className="game__center">
@@ -54,6 +48,12 @@ const gameComponent = ({ socket, game, room }) => {
           <DukeComponent dukes={game.table.dukes} />
         </div>
       </div>
+      <Profile
+        player={state.room.game.players[currentUser.turn]}
+        user={getPlayer(currentUser.turn)}
+        currentTurn={game.currentTurn}
+        isCurrentPlayer
+      />
       {
         !game.finished && <ActionBoard socket={socket} room={room} />
       }
