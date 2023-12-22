@@ -98,8 +98,10 @@ export default function Home() {
 
       <div className="container">
         <Head>
-          <title>Create Next App</title>
+          <title>Splendor</title>
           <link rel="icon" href="/favicon.ico" />
+          <link rel="manifest" href="/manifest.json" />
+          <link rel="apple-touch-icon" href="/splendor192.png" />
         </Head>
 
         <main>
