@@ -1,8 +1,9 @@
-import { useState } from 'react';
 import { Button, Input } from 'antd';
+import { useAtom } from 'jotai';
+import { playerName } from '../atoms/action';
 
 const welcome = ({ rooms, joinRoom, reset }) => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useAtom(playerName);
   return (
     <div className="welcome">
       <h1 className="title">

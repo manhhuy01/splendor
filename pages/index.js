@@ -2,6 +2,7 @@ import Head from 'next/head';
 import {
   useEffect, useState, useCallback, useReducer,
 } from 'react';
+import { useAtom } from 'jotai';
 import useSocket from '../utils/useSocket';
 import useUnload from '../utils/useUnload';
 import Welcome from '../components/welcome';
@@ -11,6 +12,7 @@ import { post } from '../utils/requets';
 import Chat from '../components/chat';
 import { initialState, reducer } from '../utils/reducer';
 import { ActionContext } from '../utils/context';
+import { playerName } from '../atoms/action';
 
 export default function Home() {
   const socket = useSocket();
@@ -19,6 +21,13 @@ export default function Home() {
   const [roomJoined, setRoomJoined] = useState(undefined);
   const [roomId, setRoomId] = useState(undefined);
   const [messages, setMessages] = useState(undefined);
+  const [name] = useAtom(playerName);
+
+  const joinRoom = (id) => {
+    socket.emit('action', { type: 'join', data: { roomId: id, name } });
+    setRoomId(id);
+  };
+
   useEffect(() => {
     if (socket) {
       socket.on('roomInfo', (data) => {
@@ -30,6 +39,9 @@ export default function Home() {
       });
       socket.on('notification', (data) => {
         console.log(data);
+      });
+      socket.io.on('reconnect', () => {
+        joinRoom(roomId, name);
       });
     }
   }, [socket, roomId]);
@@ -57,11 +69,6 @@ export default function Home() {
   useUnload(() => {
     socket && socket.disconnect();
   });
-
-  const joinRoom = (id, name) => {
-    socket.emit('action', { type: 'join', data: { roomId: id, name } });
-    setRoomId(id);
-  };
 
   const startHandle = useCallback(
     (numOfPlayer) => {
@@ -103,7 +110,6 @@ export default function Home() {
           <link rel="manifest" href="/manifest.json" />
           <link rel="apple-touch-icon" href="/splendor192.png" />
         </Head>
-
         <main>
           {!roomJoined
           && <Welcome joinRoom={joinRoom} rooms={roomInfo.rooms} reset={resetHandle} />}

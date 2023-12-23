@@ -7,9 +7,17 @@ import CardComponent from './cards';
 import Congratulation from './congratulation';
 import { ActionContext } from '../utils/context';
 
-const gameComponent = ({ socket, game, room }) => {
+const gameComponent = ({
+  socket, game, room,
+}) => {
   const getPlayer = (turn) => room.players.find((x) => x.turn === turn);
   const currentUser = room.players.find((x) => x.socketId === socket.id);
+
+  // if not currentUser
+  if (!currentUser) {
+    return null;
+  }
+
   const [winners, setWinners] = useState([]);
   const { state } = useContext(ActionContext);
 

@@ -7,12 +7,12 @@ const tokenComponent = ({ token, onClickToken }) => (
       constants.color.reduce((agg, color) => [...agg, (
         token[color]
           ? (
-            <div className={`token token--${color}`} onClick={() => onClickToken && onClickToken(color)}>
+            <div key={color} className={`token token--${color}`} onClick={() => onClickToken && onClickToken(color)}>
               <div className="token__number">
                 {token[color]}
               </div>
             </div>
-          ) : <div className="token empty" />
+          ) : <div key={color} className="token empty" />
       )], [])
     }
   </div>
