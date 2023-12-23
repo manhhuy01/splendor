@@ -1,24 +1,24 @@
-import { useRef } from 'react';
+import { useState } from 'react';
+import { Button, Input } from 'antd';
 
 const welcome = ({ rooms, joinRoom, reset }) => {
-  const inputRef = useRef(null);
+  const [value, setValue] = useState('');
   return (
-    <div>
+    <div className="welcome">
       <h1 className="title">
         Welcome to Splendor
       </h1>
       <div>
-        Tên:
-        <input ref={inputRef} />
+        <Input size="large" placeholder="Tên" value={value} onChange={(e) => setValue(e.target.value)} />
       </div>
       {
         rooms.map((room) => (
-          <div key={room.id}>
+          <div key={room.id} className="room">
             <div>
               {`phòng ${room.id} (${room.players.length})`}
             </div>
-            <button type="button" onClick={() => joinRoom(room.id, inputRef.current.value)}>vô</button>
-            <button type="button" onClick={() => reset(room.id)}>Reset Game</button>
+            <Button type="primary" onClick={() => joinRoom(room.id, value)}>Vào phòng</Button>
+            <Button danger type="text" onClick={() => reset(room.id)}>Reset Game </Button>
 
           </div>
         ))

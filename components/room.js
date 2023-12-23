@@ -1,5 +1,7 @@
+import { Button } from 'antd';
+
 const roomComponent = ({ room, player: { name }, start }) => (
-  <div>
+  <div className="welcome">
     <h1 className="title">
       Welcome to Splendor
     </h1>
@@ -15,9 +17,9 @@ const roomComponent = ({ room, player: { name }, start }) => (
       Hiện có:
       {room.players.map((x) => x.name).join()}
     </div>
-    <button type="button" onClick={() => start(2)}>Start 2 player</button>
-    <button type="button" onClick={() => start(3)}>Start 3 player</button>
-    <button type="button" onClick={() => start(4)}>Start 4 player</button>
+    <Button type="primary" onClick={() => start(2)}>Start 2 player</Button>
+    <Button type="primary" onClick={() => start(3)}>Start 3 player</Button>
+    <Button type="primary" onClick={() => start(4)}>Start 4 player</Button>
 
   </div>
 );
