@@ -48,7 +48,7 @@ const CardComponent = ({
     </Space>
   );
 
-  const source = level ? `/${level}_.png` : `/${card.image}.png`;
+  const source = level ? `/${level}_.jpg` : `/${card.image}.jpg`;
   if (!isCanDeposit && !isCanBuy) return <img className={`card ${isCardUp ? 'card-up' : ''}`} src={source} />;
   return (
     <Popover content={content} placement="right" trigger="click">

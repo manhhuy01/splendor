@@ -3,7 +3,7 @@ const dukeComponent = ({ dukes }) => (
     {
       dukes.map((duke) => (
         <div key={duke.id} className="duke">
-          <img src={`/${duke.image}.png`} />
+          <img src={`/${duke.image}.jpg`} />
         </div>
       ))
     }
