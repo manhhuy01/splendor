@@ -104,6 +104,7 @@ body {
 
 .token__number {
   margin: auto;
+  line-height: 2vw;
 }
 
 .token-normal {
