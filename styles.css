@@ -392,28 +392,28 @@ body {
 }
 
 .profile__card--white {
-  background-color: #FEFEFE;
+  background-color: var(--white);
   color: black;
 }
 
 .profile__card--blue {
-  background-color: #194D7F;
+  background-color: var(--blue);
   color: white;
 }
 
 
 .profile__card--green {
-  background-color: #1D9D22;
+  background-color: var(--green);
   color: white;
 }
 
 .profile__card--red {
-  background-color: #CD0A09;
+  background-color: var(--red);
   color: white;
 }
 
 .profile__card--black {
-  background-color: #554140;
+  background-color: var(--black);
   color: white;
 }
 

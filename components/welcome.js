@@ -4,6 +4,12 @@ import { playerName } from '../atoms/action';
 
 const welcome = ({ rooms, joinRoom, reset }) => {
   const [value, setValue] = useAtom(playerName);
+
+  const resetClick = (room) => {
+    if (confirm('Are you sure?') === true) {
+      reset(room.id);
+    }
+  };
   return (
     <div className="welcome">
       <h1 className="title">
@@ -18,8 +24,8 @@ const welcome = ({ rooms, joinRoom, reset }) => {
             <div>
               {`phòng ${room.id} (${room.players.length})`}
             </div>
-            <Button type="primary" onClick={() => joinRoom(room.id, value)}>Vào phòng</Button>
-            <Button danger type="text" onClick={() => reset(room.id)}>Reset Game </Button>
+            <Button size="large" type="primary" onClick={() => joinRoom(room.id, value)}>Vào phòng</Button>
+            <Button className="btn-reset" danger type="text" onClick={() => resetClick(room)}>Reset Game </Button>
 
           </div>
         ))
