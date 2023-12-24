@@ -1,3 +1,14 @@
+:root {
+ 
+  --white: #FEFEFE;
+  --blue: #194D7F;
+  --green: #1D9D22;
+  --red: #CD0A09;
+  --black: #554140;
+  --gold: #D3B300;
+
+}
+
 body {
   font-family: Helvetica;
   margin: 0px;
@@ -170,6 +181,18 @@ body {
   border-radius: 3vw;
 }
 
+/* .table-game .token-container .token.token--blue {
+  box-shadow: 
+    var(--blue) 3px 0px 0px -1px,
+    black 3px 0px,
+    var(--blue) 6px 0px 0px -1px,
+    black 6px 0px,
+    var(--blue) 9px 0px 0px -1px,
+    black 9px 0px,
+    var(--blue) 12px 0px 0px -1px,
+    black 12px 0px;
+} */
+
 .table-game .token img {
   max-width: 100%;
   object-fit: contain;
@@ -220,6 +243,9 @@ body {
   transition: all 0.3s;
   position: relative;
   min-height: 20vh;
+  overflow: hidden;
+  padding: 5px;
+  background: white;
 }
 
 .profile__pv {
@@ -234,15 +260,41 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  background: white;
 }
 
 .profile.current-turn {
-  border: 2px solid yellow;
-  box-shadow: 10px 10px 8px 10px #888888;
+  border: 1px solid gray;
+  box-shadow: rgb(255, 217, 19) 0px 0px 0px 2px, rgb(255, 156, 85) 0px 0px 0px 4px, rgb(255, 85, 85) 0px 0px 0px 6px;
   display: flex;
   flex-direction: column;
 }
 
+/* 
+.profile.current-turn::before {
+  z-index: -1;
+  content: '';
+  position: absolute;
+  left: -50%;
+  top: 12.5%;
+  width: 200%;
+  height: 75%;
+  background-repeat: no-repeat;
+  background-image: linear-gradient(#399953, #399953);
+  animation: rotate 4s linear infinite;
+}
+
+.profile.current-turn::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: 6px;
+  top: 6px;
+  width: calc(100% - 12px);
+  height: calc(100% - 12px);
+  background: white;
+  border-radius: 5px;
+} */
 
 
 .profile.current-player {
@@ -978,3 +1030,9 @@ body {
     box-shadow: 0px 0px 0px 0px red;
   }
 }
+
+/* @keyframes rotate {
+  100% {
+      transform: rotate(1turn);
+  }
+} */
