@@ -124,11 +124,12 @@ export default function Home() {
           {roomJoined && roomJoined.game.started
             && (
               <>
-                <Game socket={socket} game={roomJoined.game} room={roomJoined} />
-                <Chat
+                <Game
+                  socket={socket}
+                  game={roomJoined.game}
+                  room={roomJoined}
                   messages={messages || roomJoined.messages}
                   send={sendMessage}
-                  socketId={socket.id}
                 />
               </>
             )}

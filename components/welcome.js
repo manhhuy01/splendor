@@ -13,24 +13,28 @@ const welcome = ({ rooms, joinRoom, reset }) => {
   return (
     <div className="welcome">
       <h1 className="title">
-        Welcome to Splendor
+        Splendor
       </h1>
-      <div>
-        <Input size="large" placeholder="Tên" value={value} onChange={(e) => setValue(e.target.value)} />
+      <div style={{ width: '100%', maxWidth: '400px', marginBottom: '20px' }}>
+        <Input size="large" placeholder="Nhập tên của bạn..." value={value} onChange={(e) => setValue(e.target.value)} style={{ borderRadius: '8px', background: 'rgba(255,255,255,0.05)', color: 'white', borderColor: 'var(--glass-border)' }} />
       </div>
-      {
-        rooms.map((room) => (
-          <div key={room.id} className="room">
-            <div>
-              {`phòng ${room.id} (${room.players.length})`}
+      <div className="room-list">
+        {
+          rooms.map((room) => (
+            <div key={room.id} className="room">
+              <div className="room-info">
+                {`Phòng ${room.id} • ${room.players.length} người`}
+              </div>
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <Button size="large" type="primary" onClick={() => joinRoom(room.id, value)} style={{ borderRadius: '8px', background: 'var(--accent-gold)', borderColor: 'var(--accent-gold)', fontWeight: 600 }}>Vào</Button>
+                <Button className="btn-reset" danger type="text" onClick={() => resetClick(room)} style={{ color: 'var(--red)' }}>Reset</Button>
+              </div>
             </div>
-            <Button size="large" type="primary" onClick={() => joinRoom(room.id, value)}>Vào phòng</Button>
-            <Button className="btn-reset" danger type="text" onClick={() => resetClick(room)}>Reset Game </Button>
-
-          </div>
-        ))
-      }
+          ))
+        }
+      </div>
     </div>
+
   );
 };
 

@@ -89,7 +89,9 @@ const actionComponent = ({ socket, room }) => {
       {
         isMyTurn && !state.actionType && (
           <div className="action-container">
-            <button className="action__cancel" type="button" onClick={throwTurn}>Bỏ lượt</button>
+            <div className="action-buttons-fixed">
+              <button className="action__cancel" type="button" onClick={throwTurn}>Bỏ lượt</button>
+            </div>
           </div>
         )
       }
@@ -97,8 +99,9 @@ const actionComponent = ({ socket, room }) => {
         isMyTurn && state.actionType === 'collect_token' && (
           <div className="action-container">
             <TokenComponent token={state.token || {}} onClickToken={undoCollectToken} />
-            <button className="action__confirm" type="button" onClick={finishCollect}>OK</button>
-
+            <div className="action-buttons-fixed">
+              <button className="action__confirm" type="button" onClick={finishCollect}>OK</button>
+            </div>
           </div>
         )
       }
@@ -106,8 +109,9 @@ const actionComponent = ({ socket, room }) => {
         isMyTurn && state.actionType === 'return_token' && (
           <div className="action-container">
             <TokenComponent token={state.token || {}} onClickToken={undoReturnToken} />
-            <button className="action__confirm" type="button" onClick={finishReturnToken}>OK</button>
-
+            <div className="action-buttons-fixed">
+              <button className="action__confirm" type="button" onClick={finishReturnToken}>OK</button>
+            </div>
           </div>
         )
       }

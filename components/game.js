@@ -1,14 +1,15 @@
 import { useEffect, useState, useContext } from 'react';
 import Profile from './profile';
-import ActionBoard from './actionBoard';
+import Chat from './chat';
 import DukeComponent from './duke';
 import TokenComponent from './token';
 import CardComponent from './cards';
 import Congratulation from './congratulation';
 import { ActionContext } from '../utils/context';
+import Instructions from './instructions';
 
 const gameComponent = ({
-  socket, game, room,
+  socket, game, room, messages, send,
 }) => {
   const getPlayer = (turn) => room.players.find((x) => x.turn === turn);
   const currentUser = room.players.find((x) => x.socketId === socket.id);
@@ -47,7 +48,7 @@ const gameComponent = ({
             />
           ))
         }
-
+        <Instructions />
       </div>
       <div className="game__center">
         <div className="table-game">
@@ -55,16 +56,22 @@ const gameComponent = ({
           <TokenComponent token={state.room.game.table.token} />
           <DukeComponent dukes={game.table.dukes} />
         </div>
+        <div className="game__bottom">
+          <Profile
+            player={state.room.game.players[currentUser.turn]}
+            user={getPlayer(currentUser.turn)}
+            currentTurn={game.currentTurn}
+            isCurrentPlayer
+            socket={socket}
+            room={room}
+          />
+          <Chat
+            messages={messages}
+            send={send}
+            socketId={socket.id}
+          />
+        </div>
       </div>
-      <Profile
-        player={state.room.game.players[currentUser.turn]}
-        user={getPlayer(currentUser.turn)}
-        currentTurn={game.currentTurn}
-        isCurrentPlayer
-      />
-      {
-        !game.finished && <ActionBoard socket={socket} room={room} />
-      }
       {
         game.finished && <Congratulation names={winners} />
       }

@@ -8,6 +8,7 @@ import TokenProfile from './tokenProfile';
 import { ActionContext } from '../utils/context';
 import Card from './card';
 import { isReturnToken } from '../atoms/action';
+import ActionBoard from './actionBoard';
 
 const getLevelCard = (cardId) => {
   if (cardId < 41) return 1;
@@ -18,7 +19,7 @@ const getLevelCard = (cardId) => {
 
 const profileComponent = ({
   player, user, currentTurn, hidden,
-  isCurrentPlayer,
+  isCurrentPlayer, socket, room,
 }) => {
   if (!player || !user) return null;
   const isMyTurn = user.turn === currentTurn;
@@ -36,6 +37,14 @@ const profileComponent = ({
   };
 
   useEffect(() => {
+    if (isCurrentPlayer && isMyTurn) {
+      const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2574/2574-preview.mp3');
+      audio.volume = 0.5;
+      audio.play().catch((e) => console.log('Audio play failed:', e));
+    }
+  }, [isMyTurn, isCurrentPlayer]);
+
+  useEffect(() => {
     const sumToken = (token) => Object.keys(token).reduce((agg, item) => agg += token[item], 0);
     if (isCurrentPlayer && isMyTurn && sumToken(player.token) > 10 && !_isReturnToken) {
       alert('Token đã lớn hơn 10, nhả token đi bạn');
@@ -48,31 +57,34 @@ const profileComponent = ({
   return (
     <div className={`profile ${isMyTurn ? 'current-turn' : ''} ${isCurrentPlayer ? 'current-player' : ''}`}>
       <div className="profile__name">{user.name}</div>
-      <div className="profile__game">
-        <div className="profile__game__token-cards">
-          <div className="profile__game__token">
-            <TokenProfile
-              token={player.token}
-              onClickToken={onClickToken}
-            />
-          </div>
-          <div className="profile__game__cards">
+      <div className="profile__main">
+        <div className="profile__game">
+          <div className="profile__game__token-cards">
+            <div className="profile__game__token">
+              <TokenProfile
+                token={player.token}
+                onClickToken={onClickToken}
+              />
+            </div>
+            <div className="profile__game__cards">
+              {
+                constants.color.reduce((agg, color) => {
+                  if (color === 'gold') return agg;
+                  const cards = player.cards.filter((x) => x.property === color);
+                  return [
+                    ...agg,
+                    <div key={color} className={`profile__card profile__card--${cards.length ? color : 'empty'}`}>
+                      {cards.length}
+                    </div>];
+                }, [])
+              }
+            </div>
             {
-              constants.color.reduce((agg, color) => {
-                if (color === 'gold') return agg;
-                const cards = player.cards.filter((x) => x.property === color);
-                return [
-                  ...agg,
-                  <div key={color} className={`profile__card profile__card--${cards.length ? color : 'empty'}`}>
-                    {cards.length}
-                  </div>];
-              }, [])
+              isCurrentPlayer && <div className="profile__game__total-token">{`${totalToken}/10`}</div>
             }
           </div>
-          {
-            isCurrentPlayer && <div className="profile__game__total-token">{`${totalToken}/10`}</div>
-          }
         </div>
+
         <div className="profile__game__deposit">
           {
             !!player.deposit_cards.length && player.deposit_cards.map((card) => {
@@ -84,11 +96,14 @@ const profileComponent = ({
             })
           }
         </div>
-        {/* <div className="profile__game__duke">
-          {
-            !!player.dukes.length && <Duke dukes={player.dukes} />
-          }
-        </div> */}
+
+        {
+          isCurrentPlayer && (
+            <div className="profile__action">
+              <ActionBoard socket={socket} room={room} />
+            </div>
+          )
+        }
       </div>
       <div className="profile__pv">
         {player.pv}
