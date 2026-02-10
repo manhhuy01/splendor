@@ -1,4 +1,4 @@
-import { Popover, Button, Space } from 'antd';
+import { Popover } from 'antd';
 import { useContext } from 'react';
 import { post } from '../utils/requets';
 import { ActionContext } from '../utils/context';
@@ -7,7 +7,7 @@ const CardComponent = ({
   card, isCardUp, level,
   isCanDeposit, isCanBuy,
 }) => {
-  const { state } = useContext(ActionContext);
+  const { state, dispatch } = useContext(ActionContext);
   const { room, socket } = state;
 
   const onClickBuyCard = () => {
@@ -20,6 +20,9 @@ const CardComponent = ({
             alert(data.error);
           }
         }));
+    dispatch({
+      type: 'reset',
+    });
   };
 
   const onClickDepositCard = () => {
@@ -35,6 +38,9 @@ const CardComponent = ({
             alert(data.error);
           }
         }));
+    dispatch({
+      type: 'reset',
+    });
   };
 
   const isMyTurn = room.game.currentTurn === room.players.find(
@@ -42,17 +48,42 @@ const CardComponent = ({
   )?.turn;
 
   const content = (
-    <Space direction="vertical">
-      {isCanBuy && <Button disabled={!isMyTurn} onClick={onClickBuyCard}>Mua bài</Button> }
-      {isCanDeposit && <Button disabled={!isMyTurn} onClick={onClickDepositCard}>Đặt cọc</Button> }
-    </Space>
+    <div className="card-popover-container">
+      {isCanBuy && (
+        <button
+          className="popover-btn"
+          disabled={!isMyTurn}
+          onClick={onClickBuyCard}
+          type="button"
+        >
+          <span className="icon">💎</span>
+          Mua bài
+        </button>
+      )}
+      {isCanDeposit && (
+        <button
+          className="popover-btn"
+          disabled={!isMyTurn}
+          onClick={onClickDepositCard}
+          type="button"
+        >
+          <span className="icon">🔖</span>
+          Đặt cọc
+        </button>
+      )}
+    </div>
   );
 
   const source = level ? `/${level}_.jpg` : `/${card.image}.jpg`;
-  if (!isCanDeposit && !isCanBuy) return <img className={`card ${isCardUp ? 'card-up' : ''}`} src={source} />;
+  if (!isCanDeposit && !isCanBuy) return <img className={`card ${isCardUp ? 'card-up' : ''}`} src={source} alt="card" />;
   return (
-    <Popover content={content} placement="right" trigger="click">
-      <img className={`card ${isCardUp ? 'card-up' : ''}`} src={source} />
+    <Popover
+      content={content}
+      placement="right"
+      trigger="click"
+      overlayClassName="card-popover"
+    >
+      <img className={`card ${isCardUp ? 'card-up' : ''}`} src={source} alt="card" />
     </Popover>
   );
 };

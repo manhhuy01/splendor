@@ -1,29 +1,43 @@
-import { useEffect } from 'react';
 import Modal from './modal';
 
 const congratulation = ({ names = [] }) => {
-  useEffect(() => {
-    const elements = document.getElementsByClassName('bullet');
-    const bullets = Array.from(elements);
-    bullets.forEach((element, index) => {
-      const width = 15 + Math.floor(Math.random() * 15);
-      elements[index].style.setProperty('--animation-width', `${width}vw`);
-      elements[index].style.setProperty('animation-name', 'bullet-animation');
-    });
-  }, []);
+  const handleBackToLobby = () => {
+    window.location.reload();
+  };
+
   return (
     <Modal>
       <div className="congratulation">
         <div className="img-container">
-          <img src="/winner.png" className="img-winner" />
+          <img src="/winner.png" className="img-winner" alt="winner" />
         </div>
-        <div className="winner-names">
+
+        <h2 className="title">Victory!</h2>
+
+        <div className="winner-list">
           {
-            names.map((name) => (
-              <div key={name} className="winner-name">{name}</div>
+            names.map((winner, index) => (
+              <div key={winner.name} className="winner-card">
+                <div className="winner-info">
+                  <span className="winner-rank">{index + 1}</span>
+                  <span className="winner-name">{winner.name}</span>
+                </div>
+                <div className="winner-score">
+                  {winner.score} PV
+                </div>
+              </div>
             ))
           }
         </div>
+
+        <button
+          className="congratulation-btn"
+          type="button"
+          onClick={handleBackToLobby}
+        >
+          Trang chủ
+        </button>
+
         <div className="pyro">
           <div className="before" />
           <div className="after" />

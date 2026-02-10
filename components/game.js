@@ -7,6 +7,7 @@ import CardComponent from './cards';
 import Congratulation from './congratulation';
 import { ActionContext } from '../utils/context';
 import Instructions from './instructions';
+import { post } from '../utils/requets';
 
 const gameComponent = ({
   socket, game, room, messages, send,
@@ -20,22 +21,57 @@ const gameComponent = ({
   }
 
   const [winners, setWinners] = useState([]);
+  const countdownValue = game.countdown || room.countdown || 0;
+  const [timeLeft, setTimeLeft] = useState(countdownValue);
   const { state } = useContext(ActionContext);
 
+  const isMyTurn = game.currentTurn === currentUser.turn;
+
   useEffect(() => {
-    if (game.winners) {
-      const names = game.winners.map(
-        (turn) => room.players.find((player) => +player.turn === +turn),
-      ).filter(Boolean).map((x) => x.name);
-      setWinners(names);
+    if (countdownValue > 0) {
+      setTimeLeft(countdownValue);
     }
-  }, [game.finished]);
+  }, [game.currentTurn, countdownValue]);
+
+  useEffect(() => {
+    let interval;
+    if (countdownValue > 0 && timeLeft > 0 && !game.finished) {
+      interval = setInterval(() => {
+        setTimeLeft((prev) => prev - 1);
+      }, 1000);
+    } else if (countdownValue > 0 && timeLeft === 0 && isMyTurn && !game.finished) {
+      post('throw_turn', { roomId: room.id, socketId: socket.id });
+    }
+    return () => clearInterval(interval);
+  }, [timeLeft, countdownValue, isMyTurn, game.finished, room.id, socket.id]);
+
+  useEffect(() => {
+    if (game.finished && game.winners) {
+      const winnerData = game.winners.map((turn) => {
+        const playerInfo = room.players.find((p) => +p.turn === +turn);
+        const gameState = state.room.game.players[turn];
+        return {
+          name: playerInfo?.name || `Player ${turn}`,
+          score: gameState?.pv || 0,
+          turn,
+        };
+      }).sort((a, b) => b.score - a.score);
+      setWinners(winnerData);
+    }
+  }, [game.finished, game.winners, room.players, state.room.game.players]);
 
   let arrIndex = [1, 2, 3, 4];
   arrIndex = arrIndex.slice(currentUser.turn, 4)
     .concat(arrIndex.slice(0, currentUser.turn - 1));
+
   return (
     <div className="game">
+      {countdownValue > 0 && !game.finished && (
+        <div className={`game-timer ${timeLeft <= 5 ? 'warning' : ''}`} style={{ zIndex: 9999 }}>
+          <span className="timer-icon">{timeLeft <= 5 ? '⚠️' : '⏳'}</span>
+          <span className="timer-value">{timeLeft}s</span>
+        </div>
+      )}
       <div className="game__left">
         {
           arrIndex.map((turn) => (

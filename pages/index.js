@@ -71,8 +71,8 @@ export default function Home() {
   });
 
   const startHandle = useCallback(
-    (numOfPlayer) => {
-      post('start', { roomId: roomJoined.id, numOfPlayer })
+    (numOfPlayer, countdown) => {
+      post('start', { roomId: roomJoined.id, numOfPlayer, countdown })
         .then((res) => res.json()
           .then((data) => {
             if (data.error) {

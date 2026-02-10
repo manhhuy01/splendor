@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import { useCallback, useContext } from 'react';
+import { useCallback, useContext, useState } from 'react';
 import { useAtom } from 'jotai';
 import { post } from '../utils/requets';
 import { ActionContext } from '../utils/context';
@@ -26,6 +26,7 @@ const TokenComponent = ({ token, onClickToken }) => (
 
 const actionComponent = ({ socket, room }) => {
   const { state, dispatch } = useContext(ActionContext);
+  const [loading, setLoading] = useState(false);
   const player = room.players.find((x) => x.socketId === socket.id);
   if (!player) return null;
   const isMyTurn = room.game.currentTurn === player.turn;
@@ -33,10 +34,12 @@ const actionComponent = ({ socket, room }) => {
 
   const throwTurn = useCallback(
     () => {
+      setLoading(true);
       // socket.emit('action', { type: 'throw_turn', data: { roomId: room.id } });
-      post('throw_turn', { roomId: room.id, socketId: socket.id });
+      post('throw_turn', { roomId: room.id, socketId: socket.id })
+        .finally(() => setLoading(false));
     },
-    [socket],
+    [socket, room.id],
   );
 
   const undoCollectToken = useCallback((color) => {
@@ -44,16 +47,17 @@ const actionComponent = ({ socket, room }) => {
       type: 'undo_collect_token',
       color,
     });
-  }, [state]);
+  }, [dispatch]);
 
   const undoReturnToken = useCallback((color) => {
     dispatch({
       type: 'undo_return_token',
       color,
     });
-  }, [state]);
+  }, [dispatch]);
 
   const finishCollect = useCallback(() => {
+    setLoading(true);
     // validate
     // if ok
     post('collect_token', { roomId: room.id, socketId: socket.id, token: state.token })
@@ -62,13 +66,17 @@ const actionComponent = ({ socket, room }) => {
           if (data.error) {
             alert(data.error);
           }
-        }));
-    dispatch({
-      type: 'reset',
-    });
-  }, [state]);
+        }))
+      .finally(() => {
+        setLoading(false);
+        dispatch({
+          type: 'reset',
+        });
+      });
+  }, [room.id, socket.id, state.token, dispatch]);
 
   const finishReturnToken = useCallback(() => {
+    setLoading(true);
     // vaildate
     // if ok
     post('return_token', { roomId: room.id, socketId: socket.id, token: state.token })
@@ -77,12 +85,15 @@ const actionComponent = ({ socket, room }) => {
           if (data.error) {
             alert(data.error);
           }
-        }));
-    setIsReturnToken(false);
-    dispatch({
-      type: 'reset',
-    });
-  }, [state]);
+        }))
+      .finally(() => {
+        setLoading(false);
+        setIsReturnToken(false);
+        dispatch({
+          type: 'reset',
+        });
+      });
+  }, [room.id, socket.id, state.token, setIsReturnToken, dispatch]);
 
   return (
     <div className={`action-board ${isMyTurn ? 'active' : ''}`}>
@@ -90,7 +101,10 @@ const actionComponent = ({ socket, room }) => {
         isMyTurn && !state.actionType && (
           <div className="action-container">
             <div className="action-buttons-fixed">
-              <button className="action__cancel" type="button" onClick={throwTurn}>Bỏ lượt</button>
+              <button className="action__cancel" type="button" onClick={throwTurn} disabled={loading}>
+                {loading && <div className="spinner" />}
+                {loading ? 'Đang bỏ lượt...' : 'Bỏ lượt'}
+              </button>
             </div>
           </div>
         )
@@ -100,7 +114,10 @@ const actionComponent = ({ socket, room }) => {
           <div className="action-container">
             <TokenComponent token={state.token || {}} onClickToken={undoCollectToken} />
             <div className="action-buttons-fixed">
-              <button className="action__confirm" type="button" onClick={finishCollect}>OK</button>
+              <button className="action__confirm" type="button" onClick={finishCollect} disabled={loading}>
+                {loading && <div className="spinner" />}
+                {loading ? 'Đang thực hiện...' : 'OK'}
+              </button>
             </div>
           </div>
         )
@@ -110,7 +127,10 @@ const actionComponent = ({ socket, room }) => {
           <div className="action-container">
             <TokenComponent token={state.token || {}} onClickToken={undoReturnToken} />
             <div className="action-buttons-fixed">
-              <button className="action__confirm" type="button" onClick={finishReturnToken}>OK</button>
+              <button className="action__confirm" type="button" onClick={finishReturnToken} disabled={loading}>
+                {loading && <div className="spinner" />}
+                {loading ? 'Đang thực hiện...' : 'OK'}
+              </button>
             </div>
           </div>
         )

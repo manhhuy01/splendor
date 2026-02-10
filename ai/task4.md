@@ -1,0 +1,2 @@
+1. sửa lại màn hình welcome để phù hợp với UI hiện đại hơn
+2. cho phép chọn input thời gian count down (giây), nếu không nhập thì để mặc định là không countdown, khi có input countdown thì khi vào game sẽ có đồng hồ đếm ngược, nếu hết thời gian mà chưa chọn hành động thì sẽ bị mất lượt, UI của đồng hồ đếm ngược để ở góc trên bên phải của màn hình game, style phù hợp với tổng thể.

@@ -36,57 +36,117 @@ body {
   position: relative;
 }
 
+
 .welcome {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  gap: 32px;
-  background: radial-gradient(circle at center, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+  min-height: 100vh;
+  padding: 40px 20px;
+  background: 
+    radial-gradient(circle at 10% 10%, rgba(212, 175, 55, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 90% 90%, rgba(42, 109, 176, 0.1) 0%, transparent 50%);
+  position: relative;
+  overflow: hidden;
+}
+
+.welcome::before {
+  content: '';
+  position: absolute;
+  width: 200%;
+  height: 200%;
+  background: url('https://www.transparenttextures.com/patterns/carbon-fibre.png');
+  opacity: 0.1;
+  pointer-events: none;
 }
 
 .welcome .title {
-  font-size: 4rem;
-  font-weight: 700;
-  color: var(--accent-gold);
+  font-size: 5rem;
+  font-weight: 800;
+  margin-bottom: 40px;
+  background: linear-gradient(to bottom, var(--accent-gold-light), var(--accent-gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
   text-transform: uppercase;
-  letter-spacing: 8px;
-  text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
-  margin-bottom: 20px;
+  letter-spacing: 12px;
+  text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  animation: title-float 4s ease-in-out infinite;
+}
+
+@keyframes title-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.welcome-input-container {
+  width: 100%;
+  max-width: 450px;
+  margin-bottom: 40px;
+  background: var(--bg-card);
+  padding: 30px;
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-premium);
+  z-index: 1;
 }
 
 .room-list {
   display: flex;
-  flex-direction: column;
-  gap: 16px;
+  justify-content: center;
+  gap: 20px;
   width: 100%;
-  max-width: 400px;
+  max-width: 1000px;
+  z-index: 1;
 }
 
 .room {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 24px;
+  flex-direction: column;
+  padding: 24px;
   background: var(--bg-card);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(15px);
   border: 1px solid var(--glass-border);
-  border-radius: 12px;
-  transition: all 0.3s ease;
-  gap: 16px;
+  border-radius: 16px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  gap: 20px;
 }
 
 .room:hover {
-  transform: translateX(10px);
+  transform: translateY(-8px) scale(1.02);
   border-color: var(--accent-gold);
-  background: rgba(40, 40, 45, 0.9);
+  background: rgba(45, 45, 50, 0.95);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
 }
 
 .room-info {
-  flex-grow: 1;
-  font-size: 1.1rem;
-  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.room-id {
+  font-size: 0.8rem;
+  color: var(--accent-gold);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.room-name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--white);
+}
+
+.room-players {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 
@@ -354,7 +414,7 @@ body {
   height: 100%;
   width: auto;
   aspect-ratio: 5/7;
-  object-fit: contain;
+  object-fit: cover;
   max-width: 15%;
 }
 
@@ -687,7 +747,7 @@ body {
   min-width: 10%;
   min-height: 10%;
   background: white;
-  border-radius: 4px;
+  border-radius: 24px;
 }
 
 @-webkit-keyframes icon-winner-animation {
@@ -739,64 +799,214 @@ body {
 }
 
 
+/* Card Popover */
+.card-popover-container {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.popover-btn {
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 20px;
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid var(--accent-gold);
+  color: var(--accent-gold);
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Outfit', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.85rem;
+}
+
+.popover-btn:hover:not(:disabled) {
+  background: var(--accent-gold);
+  color: var(--bg-dark);
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+  transform: translateY(-2px);
+}
+
+.popover-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  border-color: var(--text-secondary);
+  color: var(--text-secondary);
+}
+
+.popover-btn .icon {
+  font-size: 1.2rem;
+}
+
+/* Ant Design Popover Overrides */
+.ant-popover-inner {
+  background-color: var(--bg-card) !important;
+  backdrop-filter: blur(15px);
+  border: 1px solid var(--glass-border) !important;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6) !important;
+  border-radius: 12px !important;
+}
+
+.ant-popover-inner-content {
+  padding: 0 !important;
+}
+
+.ant-popover-arrow::before {
+  background: var(--bg-card) !important;
+}
+
+
+/* Congratulation */
+
 .congratulation {
-  width: 30vw;
-  height: 50vh;
+  width: 500px;
+  padding: 40px;
+  background: linear-gradient(135deg, #1a1a1f 0%, #0f0f12 100%);
+  border: 2px solid var(--accent-gold);
+  border-radius: 24px;
+  box-shadow: 0 0 50px rgba(212, 175, 55, 0.2), inset 0 0 20px rgba(212, 175, 55, 0.1);
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 32px;
   position: relative;
-  background: #000;
   overflow: hidden;
-  border-radius: 8px;
 }
 
-.congratulation .pyro {
+.congratulation::before {
+  content: '';
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
 }
 
 .congratulation .img-container {
-  padding-top: 30px;
-  width: auto;
-  height: 30%;
+  width: 180px;
+  height: 180px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.2) 0%, transparent 70%);
+  border-radius: 50%;
   display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
-  justify-content: center;
 }
 
-.img-container .img-winner {
-  height: calc(100% - 30px);
-  position: absolute;
-  animation-name: icon-winner-animation;
-  animation-duration: 3s;
-  animation-delay: 0.5s;
-  animation-iteration-count: 5;
-  z-index: 1;
+.congratulation .img-winner {
+  width: 120px;
+  height: auto;
+  filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.5));
+  animation: float 3s ease-in-out infinite;
 }
 
-.winner-names {
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-15px) rotate(5deg); }
+}
+
+.congratulation .title {
+  font-size: 2.5rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  background: linear-gradient(to bottom, var(--accent-gold-light), var(--accent-gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  margin: 0;
+}
+
+.winner-list {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
   width: 100%;
-  flex-wrap: wrap;
 }
 
-@-webkit-keyframes winner-name-animation {
-  0% { transform: scale(1); }
-  30% { transform: scale(1.2); }
-  70% { transform: scale(1.2); }
-  100% { transform: scale(1); }
+.winner-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
 }
 
-@keyframes winner-name-animation {
-  0% { transform: scale(1); }
-  30% { transform: scale(1.2); }
-  70% { transform: scale(1.2); }
-  100% { transform: scale(1); }
+.winner-card:first-child {
+  border-color: var(--accent-gold);
+  background: rgba(212, 175, 55, 0.05);
+  transform: scale(1.05);
+}
+
+.winner-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.winner-rank {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+}
+
+.winner-name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--white);
+}
+
+.winner-score {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+}
+
+.congratulation-btn {
+  margin-top: 10px;
+  padding: 12px 40px;
+  background: var(--accent-gold);
+  color: var(--bg-dark);
+  border: none;
+  border-radius: 30px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+}
+
+.congratulation-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 25px rgba(212, 175, 55, 0.5);
+}
+
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 
@@ -817,7 +1027,9 @@ body {
 }
 
 /* fire-works */
-
+.pyro {
+  position: absolute;
+}
 .pyro>.before,
 .pyro>.after {
   position: absolute;
@@ -1259,18 +1471,6 @@ body {
   background: rgba(0, 0, 0, 0.2);
 }
 
-.instruction-item {
-  font-size: 0.9rem;
-  line-height: 1.5;
-  color: var(--text-secondary);
-}
-
-.instruction-item strong {
-  display: block;
-  color: var(--text-primary);
-  margin-bottom: 4px;
-}
-
 .instructions-content::-webkit-scrollbar {
   width: 4px;
 }
@@ -1282,7 +1482,7 @@ body {
 
 /* Colorful Instructions */
 .instruction-item {
-  display: flex !important;
+  display: flex;
   align-items: flex-start;
   gap: 12px;
   padding: 10px;
@@ -1290,6 +1490,9 @@ body {
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.05);
   transition: transform 0.2s ease, background 0.2s ease;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
 }
 
 .instruction-item:hover {
@@ -1306,6 +1509,12 @@ body {
   justify-content: center;
   border-radius: 50%;
   background: rgba(0, 0, 0, 0.3);
+}
+
+.instruction-item strong {
+  display: block;
+  font-size: 0.95rem;
+  margin-bottom: 2px;
 }
 
 .instruction-item.goal { border-left: 3px solid #ffd700; }
@@ -1328,11 +1537,68 @@ body {
 .instruction-item.nobles .item-icon { box-shadow: 0 0 10px rgba(255, 88, 88, 0.3); }
 .instruction-item.nobles strong { color: #ff5858; }
 
-.instruction-item strong {
-  font-size: 0.95rem;
-  margin-bottom: 2px;
-}
-
 .item-text {
   flex: 1;
+}
+
+.game-timer {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: var(--bg-card);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--accent-gold);
+  padding: 12px 24px;
+  border-radius: 40px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+  z-index: 1000;
+}
+
+.game-timer.warning {
+  border-color: var(--red);
+  box-shadow: 0 0 20px rgba(196, 48, 43, 0.4);
+  animation: timer-shake 0.2s infinite;
+}
+
+.timer-icon {
+  font-size: 1.2rem;
+}
+
+.timer-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent-gold);
+}
+
+.game-timer.warning .timer-value {
+  color: var(--red);
+}
+
+@keyframes timer-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  75% { transform: translateX(2px); }
+}
+
+/* Ant Design InputNumber Customization */
+.ant-input-number {
+  background: rgba(0, 0, 0, 0.3) !important;
+  border-color: var(--glass-border) !important;
+  color: white !important;
+}
+
+.ant-input-number-input {
+  color: white !important;
+  font-weight: 600 !important;
+}
+
+.ant-input-number-handler-wrap {
+  background: var(--bg-card) !important;
+}
+
+.ant-input-number-handler-up-inner, .ant-input-number-handler-down-inner {
+  color: var(--accent-gold) !important;
 }
