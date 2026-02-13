@@ -295,28 +295,28 @@ body {
 }
 
 .token--blue {
-  background: radial-gradient(circle at 30% 30%, #4facfe 0%, #0061ff 100%);
+  background: radial-gradient(circle at 30% 30%, var(--blue) 0%, var(--blue) 100%);
   color: white;
 }
 
 .token--green {
-  background: radial-gradient(circle at 30% 30%, #43e97b 0%, #38f9d7 100%);
+  background: radial-gradient(circle at 30% 30%, var(--green) 0%, var(--green) 100%);
   color: white;
 }
 
 .token--red {
-  background: radial-gradient(circle at 30% 30%, #ff5858 0%, #f09819 100%);
+  background: radial-gradient(circle at 30% 30%, var(--red) 0%, var(--red) 100%);
   color: white;
 }
 
 .token--black {
-  background: radial-gradient(circle at 30% 30%, #434343 0%, #000000 100%);
+  background: radial-gradient(circle at 30% 30%, var(--black) 0%, var(--black) 100%);
   color: white;
   border-color: rgba(255, 255, 255, 0.1);
 }
 
 .token--gold {
-  background: radial-gradient(circle at 30% 30%, #ffe259 0%, #ffa751 100%);
+  background: radial-gradient(circle at 30% 30%, var(--gold) 0%, var(--gold) 100%);
   color: #5d4037;
   border-color: rgba(255, 215, 0, 0.5);
 }
@@ -411,7 +411,7 @@ body {
 
 
 .card-level-row .card {
-  height: 100%;
+  height: auto;
   width: auto;
   aspect-ratio: 5/7;
   object-fit: cover;
